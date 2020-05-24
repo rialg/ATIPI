@@ -6,7 +6,6 @@
  */
 
 #include "gray_image.h"
-#include <iostream>
 
 /// @brief Constructor por defecto
 GrayImage::GrayImage(){};
@@ -36,7 +35,6 @@ GrayImage::GrayImage(const char* imageFile)
     
     /// Crear arreglo de la imagen
     imageMat = new uint8_t[width*height];
-    cout << "antes "<< width << " "<< height  << endl;
     
     getline(oImageStream, line); /// < Descartar max_val
     
@@ -47,7 +45,6 @@ GrayImage::GrayImage(const char* imageFile)
         for(char c : line)
         {
 
-            cout << "pruebas: "<< (uint8_t)c << endl;
             imageMat[row+col] = (uint8_t) c;
             col++;
         
