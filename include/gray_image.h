@@ -23,6 +23,7 @@ class GrayImage
 
     public:
         GrayImage();                        /// < Constructor por defecto
+        GrayImage(int width, int height);   /// < Constructor
         GrayImage(const char* imageFile);   /// < Constructor
         ~GrayImage();                       /// < Destructor
 
@@ -30,6 +31,8 @@ class GrayImage
         uint8_t& operator()(size_t row, size_t col) { return imageMat[ row*width + col ]; };
         ///@brief Método de acceso sin modificar valor
         const uint8_t& operator()(size_t row, size_t col) const { return imageMat[ row*width + col ]; };
+        ///@brief Método para guardar imageMat en un archivo PGM
+        void save(const char* fileName);
 
     private:
         int width = 0;                  /// < Ancho de la imagen

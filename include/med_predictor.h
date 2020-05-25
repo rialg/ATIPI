@@ -9,4 +9,11 @@
 
 #include "gray_image.h"
 
+/**
+ * @brief funcion que retorna un imagen con las prediciones MED
+ * @param [in] oImage - Imagen en escala de gris de entrada
+ * @returns predicción
+*/
+GrayImage& fixed_prediction(GrayImage oImage);
+
 #endif /// < ATIPI_INCLUDE_MED_PREDICTOR_H_
