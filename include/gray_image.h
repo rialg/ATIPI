@@ -11,6 +11,7 @@
 #include <fstream>
 #include <cstdint>
 #include <string>
+#include <tuple>
 
 using namespace std;
 
@@ -33,6 +34,12 @@ class GrayImage
         const uint8_t& operator()(size_t row, size_t col) const { return imageMat[ row*width + col ]; };
         ///@brief Método para guardar imageMat en un archivo PGM
         void save(const char* fileName);
+        ///@brief Accessor
+        int getWidth(){ return width; };
+        ///@brief Accessor
+        int getHeight(){ return height; };
+        ///@brief Accessor
+        const tuple<int, int> getShape(){ return tuple<int, int>(width, height); };
 
     private:
         int width = 0;                  /// < Ancho de la imagen

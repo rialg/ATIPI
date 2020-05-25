@@ -7,7 +7,10 @@
 #ifndef ATIPI_INCLUDE_MED_PREDICTOR_H_
 #define ATIPI_INCLUDE_MED_PREDICTOR_H_
 
+#include <algorithm>
 #include "gray_image.h"
+
+using namespace std;
 
 /**
  * @brief funcion que retorna un imagen con las prediciones MED
