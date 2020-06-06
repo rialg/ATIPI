@@ -1,11 +1,11 @@
-/** @file gray_image.h
- * Interfaz de la clase GrayImage
+/** @file Grey_image.h
+ * Interfaz de la clase GreyImage
  * Parseo de imagenes en formato PGM a un
- * objeto GrayImage
+ * objeto GreyImage
  * @see http://netpbm.sourceforge.net/doc/pgm.html
  */
-#ifndef ATIPI_INCLUDE_GRAY_IMAGE_H_
-#define ATIPI_INCLUDE_GRAY_IMAGE_H_
+#ifndef ATIPI_INCLUDE_GREY_IMAGE_H_
+#define ATIPI_INCLUDE_GREY_IMAGE_H_
 
 #include <exception>
 #include <fstream>
@@ -16,17 +16,17 @@
 using namespace std;
 
 /**
- * @class Grayimage
+ * @class Greyimage
  * @brief Objeto imagen en escala de grises
 */
-class GrayImage
+class GreyImage
 {
 
     public:
-        GrayImage();                        /// < Constructor por defecto
-        GrayImage(int width, int height);   /// < Constructor
-        GrayImage(const char* imageFile);   /// < Constructor
-        ~GrayImage();                       /// < Destructor
+        GreyImage();                        /// < Constructor por defecto
+        GreyImage(int width, int height);   /// < Constructor
+        GreyImage(const char* imageFile);   /// < Constructor
+        ~GreyImage();                       /// < Destructor
 
         ///@brief Método de acceso
         uint8_t& operator()(size_t row, size_t col) { return imageMat[ row*width + col ]; };
@@ -69,4 +69,4 @@ class InvalidImageFormatException : public exception
 
 };
 
-#endif /// < ATIPI_INCLUDE_GRAY_IMAGE_H_
+#endif /// < ATIPI_INCLUDE_GREY_IMAGE_H_
