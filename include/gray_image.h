@@ -39,6 +39,8 @@ class GrayImage
         ///@brief Accessor
         int getHeight(){ return height; };
         ///@brief Accessor
+        uint8_t* getImageMat(){ return imageMat; };
+        ///@brief Accessor
         const tuple<int, int> getShape(){ return tuple<int, int>(width, height); };
 
     private:

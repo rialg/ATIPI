@@ -3,6 +3,7 @@ Dividimos en peque;ias partes
 
     | c | b | d |
 | e | a | x | ...                - que valores seteamos cuando estamos en los extremos por ejemplo?
+                                        *podemos agregar una fila y columna con los mismos valores que la primer fila/columna?
 
 1) Modo Comun
 1.1 MED predictor
@@ -21,7 +22,7 @@ Dividimos en peque;ias partes
     -4 =        x  <= -21
     -3 = -21 <  x  <= -7
     -2 = -7  <  x  <= -3
-    -1 = -1  <  x  <   0
+    -1 = -3  <  x  <   0
      0 =        x  =   0
      1 =  3  >  x  >   0
      2 =  7  >  x  >=  3

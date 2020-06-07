@@ -33,3 +33,10 @@
 
 # Build
 build/*
+
+# .vscode stuff
+.vscode
+
+# Executables & outputs
+Compressor
+med.pgm

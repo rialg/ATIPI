@@ -17,6 +17,6 @@ using namespace std;
  * @param [in] oImage - Imagen en escala de gris de entrada
  * @returns predicción
 */
-GrayImage& fixed_prediction(GrayImage oImage);
+GrayImage& fixed_prediction(GrayImage &oImage);
 
 #endif /// < ATIPI_INCLUDE_MED_PREDICTOR_H_

@@ -1,0 +1,20 @@
+/** @file error_calculator.h
+ * Calcula diferencia entre bit predicho por el MED
+ * con bit original de la imagen.
+ */
+#ifndef ATIPI_INCLUDE_ERROR_CALCULATOR_H_
+#define ATIPI_INCLUDE_ERROR_CALCULATOR_H_
+
+#include <algorithm>
+#include "gray_image.h"
+
+using namespace std;
+
+/**
+ * @brief funcion que retorna una "imagen" con los errores de prediccion
+ * @param [in] oImage - Imagen en escala de gris de entrada
+ * @returns errores
+*/
+void calculate_errors(GrayImage &oImage, GrayImage &oPrediction, int** errorMatrix);
+
+#endif /// < ATIPI_INCLUDE_ERROR_CALCULATOR_H_

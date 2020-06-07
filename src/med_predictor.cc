@@ -12,7 +12,7 @@
  * @param [in] oImage - Imagen en escala de gris de entrada
  * @returns predicción
 */
-GrayImage& fixed_prediction(GrayImage oImage)
+GrayImage& fixed_prediction(GrayImage &oImage)
 {
     
     GrayImage* oPrediccion = new GrayImage(oImage.getWidth(), oImage.getHeight());
