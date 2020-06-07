@@ -23,23 +23,27 @@ class GreyImage
 {
 
     public:
-        GreyImage();                        /// < Constructor por defecto
-        GreyImage(int width, int height);   /// < Constructor
-        GreyImage(const char* imageFile);   /// < Constructor
-        ~GreyImage();                       /// < Destructor
+        GreyImage();                                /// < Constructor por defecto
+        GreyImage(int width, int height);           /// < Constructor
+        GreyImage(const GreyImage& oImg);           /// < Copy Constructor
+        GreyImage& operator=(const GreyImage& oImg);/// < Copy Assigment
+        GreyImage(const char* imageFile);           /// < Constructor
+        ~GreyImage();                               /// < Destructor
 
         ///@brief Método de acceso
         uint8_t& operator()(size_t row, size_t col) { return imageMat[ row*width + col ]; };
         ///@brief Método de acceso sin modificar valor
         const uint8_t& operator()(size_t row, size_t col) const { return imageMat[ row*width + col ]; };
+        ///@brief Método de acceso sin modificar valor
+        const uint8_t& operator[](size_t position) const { return imageMat[ position ]; };
         ///@brief Método para guardar imageMat en un archivo PGM
         void save(const char* fileName);
         ///@brief Accessor
-        int getWidth(){ return width; };
+        const int getWidth() const { return width; };
         ///@brief Accessor
-        int getHeight(){ return height; };
+        const int getHeight() const { return height; };
         ///@brief Accessor
-        const tuple<int, int> getShape(){ return tuple<int, int>(width, height); };
+        const tuple<int, int> getShape() const { return tuple<int, int>(width, height); };
 
     private:
         int width = 0;                  /// < Ancho de la imagen

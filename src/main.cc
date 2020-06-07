@@ -14,8 +14,8 @@ int main(void)
 {
 
     GreyImage oIMG("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
-    oIMG.save("original_img.pgm");
     GreyImage oPrediction = fixed_prediction(oIMG);
+    oIMG.save("original_img.pgm");
     oPrediction.save("med.pgm");
 
     exit(0);

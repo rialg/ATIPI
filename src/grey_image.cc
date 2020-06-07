@@ -26,6 +26,26 @@ imageMat{new uint8_t[width*height]}
 
 };
 
+/// @brief Copy Constructor
+GreyImage::GreyImage(const GreyImage& oImg):
+width{oImg.getWidth()}, 
+height{oImg.getHeight()}, 
+imageMat{new uint8_t[oImg.getWidth()*oImg.getHeight()]}
+{
+
+    for( int i = 0; i < width*height; ++i )
+        imageMat[i] = oImg[i];
+
+};
+
+/// @brief Copy Assigment
+GreyImage& GreyImage::operator=(const GreyImage& oImg)
+{
+
+    return GreyImage(oImg);
+
+};
+
 /**
  * @brief Constructor
  * @param [in] imageFile - ruta al archivo de la imagen
