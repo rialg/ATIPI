@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 //#include <memory>
-#include "gray_image.h"
+#include "grey_image.h"
 #include "med_predictor.h"
 #include "error_calculator.h"
 #include "context_sign_matrix.h"
@@ -27,8 +27,9 @@ int** initialize_errors_matrix(int height, int width){
 
 int main(int argc, char *argv[])
 {
-    GrayImage oIMG("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
-    GrayImage oPrediction = fixed_prediction(oIMG);
+    GreyImage oIMG("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
+    GreyImage oPrediction = fixed_prediction(oIMG);
+    oIMG.save("original_img.pgm");
     oPrediction.save("med.pgm");
 
     int** errors = initialize_errors_matrix(oIMG.getHeight(),oIMG.getWidth());

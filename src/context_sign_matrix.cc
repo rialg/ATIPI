@@ -27,7 +27,7 @@ contextMat{new contextSign[width*height]}
  * brief Constructor
  * @param [in] oIMG - image
 */
-ContextSignMatrix::ContextSignMatrix(GrayImage &oIMG):
+ContextSignMatrix::ContextSignMatrix(const GreyImage& oIMG):
 width{oIMG.getWidth()}, 
 height{oIMG.getHeight()}, 
 contextMat{new contextSign[width*height]}
@@ -40,7 +40,7 @@ contextMat{new contextSign[width*height]}
 
 };
 
-contextSign ContextSignMatrix::context_around(GrayImage &oImage, int row, int col){
+contextSign ContextSignMatrix::context_around(const GreyImage& oImage, int row, int col){
 
     /*
     Dados los bits:
@@ -59,18 +59,18 @@ contextSign ContextSignMatrix::context_around(GrayImage &oImage, int row, int co
                 g2 = oImage(row-1, col)-oImage(row-1, col-1),
                 g3 = oImage(row-1, col-1) - oImage(row, col-1);
 
-        q1=region(g1);
-        q2=region(g2);
-        q3=region(g3);
+        q1 = region(g1);
+        q2 = region(g2);
+        q3 = region(g3);
     }
     else {
         int8_t g1 = oImage(row-1, col+1) - oImage(row-1, col),
                g2 = oImage(row-1, col) - oImage(row-1, col-1),
                g3 = oImage(row-1, col-1) - oImage(row, col-1);
         
-        q1=region(g1);
-        q2=region(g2);
-        q3=region(g3);
+        q1 = region(g1);
+        q2 = region(g2);
+        q3 = region(g3);
     }
 
     if (q1 < 0) {
