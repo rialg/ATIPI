@@ -30,7 +30,7 @@ namespace std
             return pixel.second * 256 + pixel.first; // col * width + row
         }
     };
-}
+};
 
 /**
  * @typedef LocalContext

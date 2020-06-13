@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
         for(const auto &close : entry.second)
         {
 
-            cout << "\tcercano: ( " << close.first << ", " << close.second << ") :" << endl;
+            cout << "\tcercano: ( " << close.first << ", " << close.second << ")" << endl;
 
         }
 

@@ -4,9 +4,9 @@
  * absolutos de los errores) y n (cantidad de 
  * muestras).
  */
-
+#include <iostream>
 #include "local_context.h"
-
+using namespace std;
 /**
  * @brief Función local halla la lista de pixeles más cercanos a cierta distancia
  * @param [in] oPosition - Ubicación del pixel (x)
@@ -19,32 +19,32 @@
 static vector<PixelPos>& find_closests( const PixelPos& oPosition, const int distance, const  int total_found, const int N, const int width, int& found)
 {
 
-    vector<PixelPos> oRet;
+    vector<PixelPos>* oRet = new vector<PixelPos>();
     
     int secDistance = 0;
     while ( secDistance <= distance && total_found+found < N )
     {
 
-        if( oPosition.first - distance >= 0 && oPosition.second - secDistance >= 0 )
+        if( oPosition.first - distance >= 0 && oPosition.second - secDistance >= 0 && total_found+found < N )
         {
-            oRet.push_back(PixelPos{ oPosition.first - distance, oPosition.second - secDistance });
+            oRet->push_back(PixelPos{ oPosition.first - distance, oPosition.second - secDistance });
             found++;
         }
-        if( distance > secDistance && oPosition.first - secDistance >= 0 && oPosition.second - distance >= 0)
+        if( distance > secDistance && oPosition.first - secDistance >= 0 && oPosition.second - distance >= 0 && total_found+found < N )
         {
-            oRet.push_back(PixelPos{ oPosition.first - secDistance, oPosition.second - distance });
+            oRet->push_back(PixelPos{ oPosition.first - secDistance, oPosition.second - distance });
             found++;
         }
-        if( secDistance > 0 && oPosition.first - distance >= 0 && oPosition.second + secDistance < width )
+        if( secDistance > 0 && oPosition.first - distance >= 0 && oPosition.second + secDistance < width && total_found+found < N )
         {
-            oRet.push_back(PixelPos{ oPosition.first - distance, oPosition.second + secDistance });
+            oRet->push_back(PixelPos{ oPosition.first - distance, oPosition.second + secDistance });
             found++;
         }
 
         secDistance++; 
     }
 
-    return oRet;
+    return *oRet;
 
 }
 
@@ -58,7 +58,7 @@ static vector<PixelPos>& find_closests( const PixelPos& oPosition, const int dis
 const ContextTable& getLocalContext(const int N, const int width, const int height)
 {
 
-    ContextTable oTable;
+    ContextTable* oTable = new ContextTable();
 
     for(int row = 0; row < width; ++row)
     {
@@ -68,7 +68,7 @@ const ContextTable& getLocalContext(const int N, const int width, const int heig
             bool find_all = false;
             int distance = 0, total_found = 0;
             PixelPos oPosition{ row, col };
-            oTable[oPosition] = vector<PixelPos>();
+            (*oTable)[oPosition] = vector<PixelPos>();
 
             do
             {
@@ -76,7 +76,7 @@ const ContextTable& getLocalContext(const int N, const int width, const int heig
                 distance++;
                 int found = 0;
                 vector<PixelPos> oClosests{ find_closests(oPosition, distance, total_found, N, width, found) };
-                oTable[oPosition].insert(oTable[oPosition].begin(), oClosests.begin(), oClosests.end() );
+                (*oTable)[oPosition].insert((*oTable)[oPosition].begin(), oClosests.begin(), oClosests.end() );
                 total_found += found;
 
                 if(total_found == N || found == 0)
@@ -86,7 +86,7 @@ const ContextTable& getLocalContext(const int N, const int width, const int heig
 
         }
     }
-
-    return oTable;
+    
+    return (*oTable);
 
 }
