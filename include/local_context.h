@@ -7,6 +7,7 @@
 #ifndef ATIPI_INCLUDE_LOCAL_CONTEXT_H_
 #define ATIPI_INCLUDE_LOCAL_CONTEXT_H_
 
+#include <functional>
 #include <unordered_map>
 #include <vector>
 #include <utility>
@@ -18,6 +19,18 @@ using namespace std;
  * @brief   Coordenadas sobre la posición de un pixel
 */
 using PixelPos = pair<int, int>;
+
+/// @brief funcion de hash especializada
+namespace std
+{
+    template<> struct hash<PixelPos>
+    {
+        std::size_t operator()(PixelPos const& pixel) const noexcept
+        {
+            return pixel.second * 256 + pixel.first; // col * width + row
+        }
+    };
+}
 
 /**
  * @typedef LocalContext
