@@ -43,3 +43,68 @@ int main(int argc, char *argv[])
 
     exit(0);
 }
+
+
+#include <vector>
+
+typedef vector< tuple<int,int> > tuple_list;
+
+tuple_list desplazamientos(int MAX_WIDTH, int MAX_HEIGHT, int N, int Xr, int Xc ){
+      int max_distance = 0;
+      tuple_list closest_cells;
+
+      if (Xr == 0){           /* Si estamos en fila0*/
+            max_distance = Xc;
+      }else{
+            max_distance = max(Xr + Xc, Xr + (MAX_WIDTH - Xc));
+      }
+      
+      for (int dis=0; dis = max_distance; dis++){
+            tuple_list cells;
+            cells = cells_with_distance_i(MAX_WIDTH, MAX_HEIGHT, Xr, Xc, dis);
+            int i=0;
+            while ( i < cells.size()){
+                  if (closest_cells.size() < N){
+                  closest_cells.push_back(cells[i]);
+                  }else{
+                        break;
+                  }
+            }
+            if (closest_cells.size() == N){
+                  break;
+            }
+      }
+
+      return closest_cells;
+}
+
+tuple_list cells_with_distance_i(int MAX_WIDTH, int MAX_HEIGHT, int Xr, int Xc, int distance){
+      tuple_list cells;
+      for(int col=0; col <= distance; col++) {
+            if (col==0){
+                if (Xr-distance >= 0) {         /* max upper pixel; TOP of pyramid */
+                        cells.push_back(std::make_tuple(Xr-distance, Xc));
+                }
+            }else if(col==distance){            /* leftmost pixel */
+                  if (Xc-distance >= 0){
+                        cells.push_back(std::make_tuple(Xr, Xc-distance));
+                  }
+            }else {                             /* sides of pyramid pixels */
+                  int new_absolute_col = distance-col; 
+                  int row = distance - new_absolute_col;
+
+                  /* left side */
+                  if (Xc - new_absolute_col > 0){      /* No nos pasamos de la columna 0 */ 
+                        if (Xr - row > 0){            /* No nos pasamos de la fila 0 */ 
+                              cells.push_back(std::make_tuple(Xr-row, Xc-new_absolute_col));
+                        }
+                  }
+                  /* right side */
+                  if (Xc + new_absolute_col < MAX_WIDTH){      /* No nos pasamos de la columna MAX_WIDTH */ 
+                        if (Xr - row > 0){            /* No nos pasamos de la fila 0 */ 
+                              cells.push_back(std::make_tuple(Xr-row, Xc + new_absolute_col));
+                        }
+                  }
+            }
+      }
+}
