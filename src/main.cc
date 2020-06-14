@@ -56,10 +56,10 @@ int main(int argc, char *argv[])
         cout << "* Orden m para pixel (3, 500):" << getCodeOrder( PixelPos{3, 500}, oTable, errors) << endl;
         cout << "* Orden m para pixel (600, 500):" << getCodeOrder( PixelPos{600, 500}, oTable, errors) << endl;
     
-    } catch( InvalidPixelPositionException& e ) {
+    } catch( InvalidPixelPositionException* e ) {
 
-        cout << e.what() << endl;
-        exit(1);
+        cerr << e->what() << endl;
+        exit(-1);
 
     }
     

@@ -5,6 +5,22 @@
  */
 #include "context_sign_matrix.h"
 
+/// @brief Constructor
+contextSign::contextSign():
+q1{0},
+q2{0},
+q3{0},
+changedSign{false}
+{};
+
+/// @brief Constructor
+contextSign::contextSign(int q1, int q2, int q3, bool changedSign):
+q1{q1},
+q2{q2},
+q3{q3},
+changedSign{changedSign}
+{};
+
 /// @brief Constructor por defecto
 ContextSignMatrix::ContextSignMatrix(){};
 

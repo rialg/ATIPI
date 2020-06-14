@@ -22,10 +22,15 @@ struct contextSign
 {
 
     public:
-        int q1 = 0; /// < Default
-        int q2 = 0; /// < Default
-        int q3 = 0; /// < Default
-        bool changedSign = false;   /// < Default
+        /// Constructor
+        contextSign(int q1, int q2, int q3, bool changedSign);
+        /// Delete default
+        contextSign();
+        
+        int q1;
+        int q2;
+        int q3;
+        bool changedSign;
 
 };
 
