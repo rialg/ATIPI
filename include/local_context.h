@@ -27,7 +27,7 @@ namespace std
     {
         std::size_t operator()(PixelPos const& pixel) const noexcept
         {
-            return pixel.second * 256 + pixel.first; // col * width + row
+            return pixel.second * 512 + pixel.first; // col * width + row
         }
     };
 };
@@ -47,5 +47,27 @@ using ContextTable = unordered_map< PixelPos, vector<PixelPos> >;
  * @returns ContextTable, o tabla con pares de desplazamientos
 */
 const ContextTable& getLocalContext(const int N, const int width, const int height);
+
+/**
+ * @class InvalidPixelPositionException
+ * @brief   Excepción usada para controlar el acceso a la 
+ *          tabla de contextos locales
+*/
+class InvalidPixelPositionException : public exception
+{
+
+    /**
+     * @brief Explicación del error
+     * @returns Texto explicativo
+    */
+    public:
+        const char* what() const throw ()
+        {
+        
+            return "Invalid pixel position.";
+    
+        };
+
+};
 
 #endif /// < ATIPI_INCLUDE_LOCAL_CONTEXT_H_

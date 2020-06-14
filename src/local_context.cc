@@ -4,8 +4,9 @@
  * absolutos de los errores) y n (cantidad de 
  * muestras).
  */
-#include <iostream>
+
 #include "local_context.h"
+
 using namespace std;
 /**
  * @brief Función local halla la lista de pixeles más cercanos a cierta distancia
