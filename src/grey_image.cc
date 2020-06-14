@@ -42,7 +42,13 @@ imageMat{new uint8_t[oImg.getWidth()*oImg.getHeight()]}
 GreyImage& GreyImage::operator=(const GreyImage& oImg)
 {
 
-    return GreyImage(oImg);
+    if(&oImg == this)
+        return *this;
+
+    for( int i = 0; i < width*height; ++i )
+        this->imageMat[i] = oImg[i];
+
+    return *this;
 
 };
 
