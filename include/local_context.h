@@ -33,20 +33,10 @@ namespace std
 };
 
 /**
- * @typedef LocalContext
- * @brief   Tabla con pares de desplazamientos para cada pixel de la imagen
- *           Obs.: Un pixel es igual a pair<uint_8, uint_8>
+ * @typedef ContextTableBase
+ * @brief Alias para especialización del contenedor del contexto local
 */
-using ContextTable = unordered_map< PixelPos, vector<PixelPos> >;
-
-/**
- * @brief Función que calcula la tabla de contextos
- * @param [in] N - Tamaño del contexto
- * @param [in] width - Cantidad de columnas de pixeles de la imagen
- * @param [in] height - Cantidad de filas de pixeles de la imagen
- * @returns ContextTable, o tabla con pares de desplazamientos
-*/
-const ContextTable& getLocalContext(const int N, const int width, const int height);
+using ContextTableBase = unordered_map< PixelPos, vector<PixelPos> >;
 
 /**
  * @class InvalidPixelPositionException
@@ -69,5 +59,37 @@ class InvalidPixelPositionException : public exception
         };
 
 };
+
+/**
+ * @class ContextTable
+ * @brief   Tabla con pares de desplazamientos para cada pixel de la imagen
+ *           Obs.: Un pixel es igual a pair<uint_8, uint_8>
+*/
+class ContextTable : public ContextTableBase
+{
+
+    public:
+        ContextTable();
+        ~ContextTable();
+        /**
+          * @brief   Sobrecarga del operador
+        */
+        vector<PixelPos>& operator[]( const PixelPos& oPixel ){
+            if( this->find(oPixel) == this->end() )
+                throw new InvalidPixelPositionException();
+            else
+                return ContextTableBase::operator[]( oPixel );
+        };
+
+};
+
+/**
+ * @brief Función que calcula la tabla de contextos
+ * @param [in] N - Tamaño del contexto
+ * @param [in] width - Cantidad de columnas de pixeles de la imagen
+ * @param [in] height - Cantidad de filas de pixeles de la imagen
+ * @returns ContextTable, o tabla con pares de desplazamientos
+*/
+const ContextTable& getLocalContext(const int N, const int width, const int height);
 
 #endif /// < ATIPI_INCLUDE_LOCAL_CONTEXT_H_

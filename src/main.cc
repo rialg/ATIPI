@@ -59,11 +59,14 @@ int main(int argc, char *argv[])
     } catch( InvalidPixelPositionException* e ) {
 
         cerr << e->what() << endl;
-        exit(-1);
+        cout << e->what() << endl;
+        //exit(-1);
 
     }
     
-    /*for (const auto &entry : oTable) 
+    /// Nuevo ejemplo de calculo de contexto local
+    oTable = ContextTable{ getLocalContext(5, 5, 5) };
+    for (const auto &entry : oTable) 
     {
         
         cout << "px: ( " << entry.first.first << ", " << entry.first.second << ") :" << endl;
@@ -74,7 +77,7 @@ int main(int argc, char *argv[])
 
         }
 
-    }*/
+    }
 
     exit(0);
 }

@@ -16,29 +16,34 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, int** errorMatrix
 {
 
     /// Si se intenta acceder a una posición invalida, elevar excepción
-    /// TODO: Hacer overload de operator[] y agregar la excepción allí
-    if( oTable.find(oPixel) == oTable.end() )
-        throw new InvalidPixelPositionException();
+    try {
 
-    if( oTable[ oPixel ].empty() )
-        return 2 << (3 - 1); /// < m = 2^3
-    else
+        if( oTable[ oPixel ].empty() )
+            return 2 << (3 - 1); /// < m = 2^3
+        else
+        {
+        
+            /// < Cantidad de errores de predicción
+            int n = oTable[oPixel].size();
+            /// < Suma de valores absolutos de errores de predicción
+            double A = 0;
+    
+            for (const auto& oNeighbour : oTable[oPixel] )
+            {
+            
+                A += abs( errorMatrix[oNeighbour.first][oNeighbour.second] );
+    
+            }
+            
+            return 2 << (static_cast<int>( ceil( log2(A/n) )) - 1); /// m = 2^k
+            
+        }
+
+    } catch ( InvalidPixelPositionException& e)
     {
 
-        /// < Cantidad de errores de predicción
-        int n = oTable[oPixel].size();
-        /// < Suma de valores absolutos de errores de predicción
-        double A = 0;
+        throw e;
 
-        for (const auto& oNeighbour : oTable[oPixel] )
-        {
-
-            A += abs( errorMatrix[oNeighbour.first][oNeighbour.second] );
-
-        }
-        
-        return 2 << (static_cast<int>( ceil( log2(A/n) )) - 1); /// m = 2^k
-        
     }
 
 }

@@ -7,7 +7,14 @@
 
 #include "local_context.h"
 
-using namespace std;
+/// @brief Class constructor
+ContextTable::ContextTable()
+{};
+
+/// @brief Class destructor
+ContextTable::~ContextTable()
+{};
+
 /**
  * @brief Función local halla la lista de pixeles más cercanos a cierta distancia
  * @param [in] oPosition - Ubicación del pixel (x)
@@ -69,7 +76,8 @@ const ContextTable& getLocalContext(const int N, const int width, const int heig
             bool find_all = false;
             int distance = 0, total_found = 0;
             PixelPos oPosition{ row, col };
-            (*oTable)[oPosition] = vector<PixelPos>();
+            if( oTable->find(oPosition) == oTable->end() )
+                oTable->insert({ oPosition, vector<PixelPos>() });
 
             do
             {
