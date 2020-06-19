@@ -8,7 +8,7 @@
 #define ATIPI_INCLUDE_MED_PREDICTOR_H_
 
 #include <algorithm>
-#include "gray_image.h"
+#include "grey_image.h"
 
 using namespace std;
 
@@ -17,6 +17,6 @@ using namespace std;
  * @param [in] oImage - Imagen en escala de gris de entrada
  * @returns predicción
 */
-GrayImage& fixed_prediction(GrayImage &oImage);
+GreyImage& fixed_prediction(const GreyImage& oImage);
 
 #endif /// < ATIPI_INCLUDE_MED_PREDICTOR_H_

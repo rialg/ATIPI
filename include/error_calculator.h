@@ -6,7 +6,7 @@
 #define ATIPI_INCLUDE_ERROR_CALCULATOR_H_
 
 #include <algorithm>
-#include "gray_image.h"
+#include "grey_image.h"
 
 using namespace std;
 
@@ -15,6 +15,6 @@ using namespace std;
  * @param [in] oImage - Imagen en escala de gris de entrada
  * @returns errores
 */
-void calculate_errors(GrayImage &oImage, GrayImage &oPrediction, int** errorMatrix);
+void calculate_errors(const GreyImage &oImage, const GreyImage &oPrediction, int** errorMatrix);
 
 #endif /// < ATIPI_INCLUDE_ERROR_CALCULATOR_H_

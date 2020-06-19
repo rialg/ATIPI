@@ -1,21 +1,21 @@
 /** @file gray_image.cc
- * Implementación de la clase GrayImage
+ * Implementación de la clase GreyImage
  * Parseo de imagenes en formato PGM a un
- * objeto GrayImage
+ * objeto GreyImage
  * @see http://netpbm.sourceforge.net/doc/pgm.html
  */
 
-#include "gray_image.h"
+#include "grey_image.h"
 
 /// @brief Constructor por defecto
-GrayImage::GrayImage(){};
+GreyImage::GreyImage(){};
 
 /**
  * brief Constructor
  * @param [in] width - ancho de la imagen
  * @param [in] height - alto de la imagen
 */
-GrayImage::GrayImage(int width, int height):
+GreyImage::GreyImage(int width, int height):
 width{width}, 
 height{height}, 
 imageMat{new uint8_t[width*height]}
@@ -26,11 +26,31 @@ imageMat{new uint8_t[width*height]}
 
 };
 
+/// @brief Copy Constructor
+GreyImage::GreyImage(const GreyImage& oImg):
+width{oImg.getWidth()}, 
+height{oImg.getHeight()}, 
+imageMat{new uint8_t[oImg.getWidth()*oImg.getHeight()]}
+{
+
+    for( int i = 0; i < width*height; ++i )
+        imageMat[i] = oImg[i];
+
+};
+
+/// @brief Copy Assigment
+GreyImage& GreyImage::operator=(const GreyImage& oImg)
+{
+
+    return GreyImage(oImg);
+
+};
+
 /**
  * @brief Constructor
  * @param [in] imageFile - ruta al archivo de la imagen
 */ 
-GrayImage::GrayImage(const char* imageFile)
+GreyImage::GreyImage(const char* imageFile)
 {
 
     /**
@@ -59,15 +79,15 @@ GrayImage::GrayImage(const char* imageFile)
     for(char c : line)
     {
      
-        imageMat[row*width+col] = (uint8_t) c;
+        imageMat[row*height+col] = (uint8_t) c;
         col++;
 
-        if ( col % height == 0 )
+        if ( col % width == 0 )
         {
             col = 0;
             row++;
         }
-        if(row >= width)
+        if(row >= height)
             break;
 
     }
@@ -80,7 +100,7 @@ GrayImage::GrayImage(const char* imageFile)
  * @brief Método para guardar imageMat en un archivo PGM
  * @param [in] fileName - nombre del archivo donde se guarda la imagen
 */
-void GrayImage::save(const char* fileName)
+void GreyImage::save(const char* fileName)
 {
 
     /// Abrir el archivo
@@ -90,12 +110,12 @@ void GrayImage::save(const char* fileName)
     fOut << width << " " << height << endl;
     fOut << "255" << endl;
 
-    for( int row=0; row < width; ++row)
+    for( int row=0; row < height; ++row)
     {
-        for( int col=0; col < height; ++col)
+        for( int col=0; col < width; ++col)
         {
 
-            fOut << (char) imageMat[row*width+col];
+            fOut << (char) imageMat[row*height+col];
 
         }
 
@@ -105,7 +125,7 @@ void GrayImage::save(const char* fileName)
 };
 
 /// @brief Destructor
-GrayImage::~GrayImage()
+GreyImage::~GreyImage()
 {
 
     if(imageMat != nullptr)

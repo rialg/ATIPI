@@ -12,10 +12,10 @@
  * @param [in] oImage - Imagen en escala de gris de entrada
  * @returns predicción
 */
-GrayImage& fixed_prediction(GrayImage &oImage)
+GreyImage& fixed_prediction(const GreyImage& oImage)
 {
     
-    GrayImage* oPrediccion = new GrayImage(oImage.getWidth(), oImage.getHeight());
+    GreyImage* oPrediccion = new GreyImage(oImage.getWidth(), oImage.getHeight());
     /// Saltear primera fila
     for(int row = 1; row < oPrediccion->getWidth() ; ++row)
     {
@@ -23,11 +23,11 @@ GrayImage& fixed_prediction(GrayImage &oImage)
         for(int col = 1; col < oPrediccion->getHeight() ; ++col)
         {
             /// Asignar predicción
-            uint8_t a = oImage(row-1, col), b = oImage(row, col-1), c = oImage(row-1, col-1);
-            if( c >= a && c >= b )
-                (*oPrediccion)(row, col) = max(a, b);
-            else if( c <= a && c <= b )
+            uint8_t a = oImage(row, col-1), b = oImage(row-1, col), c = oImage(row-1, col-1);
+            if( c >= max(a,b) )
                 (*oPrediccion)(row, col) = min(a, b);
+            else if( c <= min(a,b) )
+                (*oPrediccion)(row, col) = max(a, b);
             else
                 (*oPrediccion)(row, col) = a + b - c;
 

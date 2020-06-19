@@ -39,4 +39,4 @@ build/*
 
 # Executables & outputs
 Compressor
-med.pgm
+*.pgm

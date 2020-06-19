@@ -1,11 +1,11 @@
-/** @file gray_image.h
- * Interfaz de la clase GrayImage
+/** @file grey_image.h
+ * Interfaz de la clase GreyImage
  * Parseo de imagenes en formato PGM a un
- * objeto GrayImage
+ * objeto GreyImage
  * @see http://netpbm.sourceforge.net/doc/pgm.html
  */
-#ifndef ATIPI_INCLUDE_GRAY_IMAGE_H_
-#define ATIPI_INCLUDE_GRAY_IMAGE_H_
+#ifndef ATIPI_INCLUDE_GREY_IMAGE_H_
+#define ATIPI_INCLUDE_GREY_IMAGE_H_
 
 #include <exception>
 #include <fstream>
@@ -16,32 +16,34 @@
 using namespace std;
 
 /**
- * @class Grayimage
+ * @class Greyimage
  * @brief Objeto imagen en escala de grises
 */
-class GrayImage
+class GreyImage
 {
 
     public:
-        GrayImage();                        /// < Constructor por defecto
-        GrayImage(int width, int height);   /// < Constructor
-        GrayImage(const char* imageFile);   /// < Constructor
-        ~GrayImage();                       /// < Destructor
+        GreyImage();                                /// < Constructor por defecto
+        GreyImage(int width, int height);           /// < Constructor
+        GreyImage(const GreyImage& oImg);           /// < Copy Constructor
+        GreyImage& operator=(const GreyImage& oImg);/// < Copy Assigment
+        GreyImage(const char* imageFile);           /// < Constructor
+        ~GreyImage();                               /// < Destructor
 
         ///@brief Método de acceso
         uint8_t& operator()(size_t row, size_t col) { return imageMat[ row*width + col ]; };
         ///@brief Método de acceso sin modificar valor
         const uint8_t& operator()(size_t row, size_t col) const { return imageMat[ row*width + col ]; };
+        ///@brief Método de acceso sin modificar valor
+        const uint8_t& operator[](size_t position) const { return imageMat[ position ]; };
         ///@brief Método para guardar imageMat en un archivo PGM
         void save(const char* fileName);
         ///@brief Accessor
-        int getWidth(){ return width; };
+        const int getWidth() const { return width; };
         ///@brief Accessor
-        int getHeight(){ return height; };
+        const int getHeight() const { return height; };
         ///@brief Accessor
-        uint8_t* getImageMat(){ return imageMat; };
-        ///@brief Accessor
-        const tuple<int, int> getShape(){ return tuple<int, int>(width, height); };
+        const tuple<int, int> getShape() const { return tuple<int, int>(width, height); };
 
     private:
         int width = 0;                  /// < Ancho de la imagen
@@ -71,4 +73,4 @@ class InvalidImageFormatException : public exception
 
 };
 
-#endif /// < ATIPI_INCLUDE_GRAY_IMAGE_H_
+#endif /// < ATIPI_INCLUDE_GREY_IMAGE_H_
