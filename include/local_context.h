@@ -39,6 +39,12 @@ namespace std
 using ContextTableBase = unordered_map< PixelPos, vector<PixelPos> >;
 
 /**
+ * @typedef ContextMask
+ * @brief   Mascara para hallar pixeles del contexto
+*/
+using ContextMask = vector<PixelPos>;
+
+/**
  * @class InvalidPixelPositionException
  * @brief   Excepción usada para controlar el acceso a la 
  *          tabla de contextos locales

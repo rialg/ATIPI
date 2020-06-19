@@ -16,42 +16,81 @@ ContextTable::~ContextTable()
 {};
 
 /**
- * @brief Función local halla la lista de pixeles más cercanos a cierta distancia
- * @param [in] oPosition - Ubicación del pixel (x)
- * @param [in] distance - Distancia de los vecinos
- * @param [in] total_found - Cantidad de vecinos encontrados hasta el momento
- * @param [in] N - tamaño del contexto
- * @param [out] found - Cantidad de pixeles vecinos nuevos encontrados 
- * @returns oClosests, lista de pixeles a una distancia "distance"
+ * @brief Función local que determina la mascara de los pixeles que pertenecen al contexto
+ * @param [in] N - Tamaño del contexto
+ * @returns oMask, lista de pixeles en la mascara del contexto local
 */
-static vector<PixelPos>& find_closests( const PixelPos& oPosition, const int distance, const  int total_found, const int N, const int width, int& found)
+static ContextMask& createPixelMask(const int N)
+{
+
+    bool find_all = false;
+    int distance = 0, total_found = 0;
+    ContextMask* oMask = new ContextMask();
+    do
+    {
+
+        distance++;
+        int found = 0;
+        int secDistance = 0;
+
+        while ( secDistance <= distance && total_found+found < N )
+        {
+
+
+            if( distance > secDistance && total_found+found < N )
+            {
+                oMask->push_back(PixelPos{ 0 - secDistance, 0 - distance });
+                found++;
+            }
+            if( total_found+found < N )
+            {
+                oMask->push_back(PixelPos{ 0 - distance, 0 - secDistance });
+                found++;
+            }
+            if( secDistance > 0 && total_found+found < N )
+            {
+                oMask->push_back(PixelPos{ 0 - distance, 0 + secDistance });
+                found++;
+            }
+
+        secDistance++; 
+        }
+
+        total_found += found;
+        if(total_found == N || found == 0)
+            find_all = true;
+
+    } while(!find_all);
+    return *oMask;
+
+}
+
+/**
+ * @brief Función local para aplicar la mascara del contexto local a cada uno de los pixeles
+ * @param [in] oPosition - Ubicación del pixel (x)
+ * @param [in] oMask - Mascara del contexto
+ * @param [in] width - Cantidad de columnas de pixeles de la imagen
+ * @param [in] height - Cantidad de filas de pixeles de la imagen
+ * @returns oRet, lista de pixeles en el contexto local de oPosition
+*/
+static vector<PixelPos>& applyMask(const PixelPos& oPosition, const ContextMask& oMask, const int width, const int height)
 {
 
     vector<PixelPos>* oRet = new vector<PixelPos>();
-    
-    int secDistance = 0;
-    while ( secDistance <= distance && total_found+found < N )
+    /// Tomar cada pixel de la mascara
+    for(const auto& dot : oMask )
     {
 
-        if( oPosition.first - distance >= 0 && oPosition.second - secDistance >= 0 && total_found+found < N )
-        {
-            oRet->push_back(PixelPos{ oPosition.first - distance, oPosition.second - secDistance });
-            found++;
-        }
-        if( distance > secDistance && oPosition.first - secDistance >= 0 && oPosition.second - distance >= 0 && total_found+found < N )
-        {
-            oRet->push_back(PixelPos{ oPosition.first - secDistance, oPosition.second - distance });
-            found++;
-        }
-        if( secDistance > 0 && oPosition.first - distance >= 0 && oPosition.second + secDistance < width && total_found+found < N )
-        {
-            oRet->push_back(PixelPos{ oPosition.first - distance, oPosition.second + secDistance });
-            found++;
-        }
+        PixelPos oCandidate{ oPosition.first + dot.first, oPosition.second + dot.second };
+        if( oCandidate.first >= 0       &&
+            oCandidate.first < height   &&
+            oCandidate.second >=0       &&
+            oCandidate.second < width   )
+            oRet->push_back(oCandidate);
+        else
+            continue;
 
-        secDistance++; 
     }
-
     return *oRet;
 
 }
@@ -61,12 +100,13 @@ static vector<PixelPos>& find_closests( const PixelPos& oPosition, const int dis
  * @param [in] N - Tamaño del contexto
  * @param [in] width - Cantidad de columnas de pixeles de la imagen
  * @param [in] height - Cantidad de filas de pixeles de la imagen
- * @returns ContextTable, o tabla con pares de desplazamientos
+ * @returns oTable, o tabla con pares de desplazamientos
 */
 const ContextTable& getLocalContext(const int N, const int width, const int height)
 {
 
     ContextTable* oTable = new ContextTable();
+    ContextMask oMask{ createPixelMask(N) };
 
     for(int row = 0; row < width; ++row)
     {
@@ -77,21 +117,7 @@ const ContextTable& getLocalContext(const int N, const int width, const int heig
             int distance = 0, total_found = 0;
             PixelPos oPosition{ row, col };
             if( oTable->find(oPosition) == oTable->end() )
-                oTable->insert({ oPosition, vector<PixelPos>() });
-
-            do
-            {
-                
-                distance++;
-                int found = 0;
-                vector<PixelPos> oClosests{ find_closests(oPosition, distance, total_found, N, width, found) };
-                (*oTable)[oPosition].insert((*oTable)[oPosition].begin(), oClosests.begin(), oClosests.end() );
-                total_found += found;
-
-                if(total_found == N || found == 0)
-                    find_all = true;    
-
-            } while(!find_all);
+                oTable->insert({ oPosition, applyMask(oPosition, oMask, width, height) });
 
         }
     }
