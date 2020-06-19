@@ -29,7 +29,7 @@ static int** initialize_errors_matrix(int height, int width){
 
 int main(int argc, char *argv[])
 {
-    
+  
     GreyImage oIMG("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
     GreyImage oPrediction = fixed_prediction(oIMG);
     oIMG.save("original_img.pgm");
@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
     int** errors = initialize_errors_matrix(oIMG.getHeight(),oIMG.getWidth());
     calculate_errors(oIMG, oPrediction, errors);
     printf("error on (row,col) (15,15) %i", errors[15][15]);
+
     cout << "\ncontextMat height: " << sizeof(errors) << " and contextMat width: " << sizeof(errors[0]) << endl;
 
 
