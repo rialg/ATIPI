@@ -36,7 +36,6 @@ static ContextMask& createPixelMask(const int N)
         while ( secDistance <= distance && total_found+found < N )
         {
 
-
             if( distance > secDistance && total_found+found < N )
             {
                 oMask->push_back(PixelPos{ 0 - secDistance, 0 - distance });

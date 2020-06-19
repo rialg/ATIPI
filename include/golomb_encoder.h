@@ -18,6 +18,13 @@
 */
 int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, int** errorMatrix );
 
-/// TODO: Mapeo de Rice y codificación de Golomb
+/**
+ * @brief Mapeo de Rice
+ * @param [in] height - Cantidad de filas
+ * @param [in] width - Cantidad de columnas
+ * @param [in] errorMatrix - Matrix con errores de predicción
+ * @returns mappings - Mapeo
+*/
+GreyImage& RiceMapping( int height, int width, int** errorMatrix );
 
 #endif /// < ATIPI_INCLUDE_GOLOMB_ENCODER_H_

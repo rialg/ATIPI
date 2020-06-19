@@ -15,12 +15,12 @@
 GreyImage& fixed_prediction(const GreyImage& oImage)
 {
     
-    GreyImage* oPrediccion = new GreyImage(oImage.getWidth(), oImage.getHeight());
+    GreyImage* oPrediccion = new GreyImage(oImage.getHeight(), oImage.getWidth());
     /// Saltear primera fila
-    for(int row = 1; row < oPrediccion->getWidth() ; ++row)
+    for(int row = 1; row < oPrediccion->getHeight() ; ++row)
     {
         /// Saltear primera columna
-        for(int col = 1; col < oPrediccion->getHeight() ; ++col)
+        for(int col = 1; col < oPrediccion->getWidth() ; ++col)
         {
             /// Asignar predicción
             uint8_t a = oImage(row, col-1), b = oImage(row-1, col), c = oImage(row-1, col-1);

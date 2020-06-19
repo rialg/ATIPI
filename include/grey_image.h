@@ -24,16 +24,16 @@ class GreyImage
 
     public:
         GreyImage();                                /// < Constructor por defecto
-        GreyImage(int width, int height);           /// < Constructor
+        GreyImage(int height, int width);           /// < Constructor
         GreyImage(const GreyImage& oImg);           /// < Copy Constructor
         GreyImage& operator=(const GreyImage& oImg);/// < Copy Assigment
         GreyImage(const char* imageFile);           /// < Constructor
         ~GreyImage();                               /// < Destructor
 
         ///@brief Método de acceso
-        uint8_t& operator()(size_t row, size_t col) { return imageMat[ row*width + col ]; };
+        uint8_t& operator()(size_t row, size_t col) { return imageMat[ row * height + col ]; };
         ///@brief Método de acceso sin modificar valor
-        const uint8_t& operator()(size_t row, size_t col) const { return imageMat[ row*width + col ]; };
+        const uint8_t& operator()(size_t row, size_t col) const { return imageMat[ row * height + col ]; };
         ///@brief Método de acceso sin modificar valor
         const uint8_t& operator[](size_t position) const { return imageMat[ position ]; };
         ///@brief Método para guardar imageMat en un archivo PGM

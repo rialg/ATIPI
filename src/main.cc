@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     GreyImage oIMG("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
     GreyImage oPrediction = fixed_prediction(oIMG);
     oIMG.save("original_img.pgm");
-    oPrediction.save("med.pgm");
+    oPrediction.save("med_new.pgm");
 
     int** errors = initialize_errors_matrix(oIMG.getHeight(),oIMG.getWidth());
     calculate_errors(oIMG, oPrediction, errors);
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     }
     
     /// Nuevo ejemplo de calculo de contexto local
-    oTable = ContextTable{ getLocalContext(5, 5, 5) };
+    /*oTable = ContextTable{ getLocalContext(5, 5, 5) };
     for (const auto &entry : oTable) 
     {
         
@@ -77,7 +77,10 @@ int main(int argc, char *argv[])
 
         }
 
-    }
+    }*/
+
+    GreyImage oMap{ RiceMapping(oPrediction.getHeight(), oPrediction.getWidth(), errors) };
+    oMap.save("errors_img.pgm");
 
     exit(0);
 }

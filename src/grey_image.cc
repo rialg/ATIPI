@@ -15,9 +15,9 @@ GreyImage::GreyImage(){};
  * @param [in] width - ancho de la imagen
  * @param [in] height - alto de la imagen
 */
-GreyImage::GreyImage(int width, int height):
+GreyImage::GreyImage(int height, int width):
+height{height},
 width{width}, 
-height{height}, 
 imageMat{new uint8_t[width*height]}
 {
     /// Crear imagen oscura
@@ -121,7 +121,7 @@ void GreyImage::save(const char* fileName)
         for( int col=0; col < width; ++col)
         {
 
-            fOut << (char) imageMat[row*height+col];
+            fOut << (char) imageMat[ row * height + col ];
 
         }
 
