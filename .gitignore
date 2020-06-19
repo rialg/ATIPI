@@ -34,5 +34,9 @@
 # Build
 build/*
 
-# Visual Studio Code Cache
+# .vscode stuff
 .vscode
+
+# Executables & outputs
+Compressor
+*.pgm

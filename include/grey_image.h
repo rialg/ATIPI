@@ -1,4 +1,4 @@
-/** @file Grey_image.h
+/** @file grey_image.h
  * Interfaz de la clase GreyImage
  * Parseo de imagenes en formato PGM a un
  * objeto GreyImage
