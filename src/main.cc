@@ -8,7 +8,6 @@
 #include "gray_image.h"
 #include "med_predictor.h"
 #include "error_calculator.h"
-#include "context_sign_matrix.h"
 
 /// Usar namespace de la biblioteca estándar
 using namespace std;
@@ -35,11 +34,6 @@ int main(int argc, char *argv[])
     calculate_errors(oIMG, oPrediction, errors);
     printf("error on (row,col) (15,15) %i", errors[15][15]);
     cout << "\ncontextMat height: " << sizeof(errors) << " and contextMat width: " << sizeof(errors[0]);
-
-
-    ContextSignMatrix contexts(oIMG);
-    cout << "\ncontext of (row,col) (15,15): " << contexts(15,15).q1 << "," << contexts(15,15).q2 << "," << contexts(15,15).q3;
-    cout << "\ncontextMat width: " << contexts.getWidth() << " and contextMat height: " << contexts.getHeight();
 
     exit(0);
 }
