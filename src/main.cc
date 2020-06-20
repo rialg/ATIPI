@@ -30,6 +30,7 @@ static int** initialize_errors_matrix(int height, int width){
 int main(int argc, char *argv[])
 {
   
+    /*
     GreyImage oIMG("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
     GreyImage oPrediction = fixed_prediction(oIMG);
     oIMG.save("original_img.pgm");
@@ -65,23 +66,30 @@ int main(int argc, char *argv[])
 
     }
     
-    /// Nuevo ejemplo de calculo de contexto local
-    /*oTable = ContextTable{ getLocalContext(5, 5, 5) };
-    for (const auto &entry : oTable) 
-    {
-        
-        cout << "px: ( " << entry.first.first << ", " << entry.first.second << ") :" << endl;
-        for(const auto &close : entry.second)
-        {
-
-            cout << "\tcercano: ( " << close.first << ", " << close.second << ")" << endl;
-
-        }
-
-    }*/
 
     GreyImage oMap{ RiceMapping(oPrediction.getHeight(), oPrediction.getWidth(), errors) };
     oMap.save("errors_img.pgm");
+    */
+    GreyImage oImg{2 , 2};
+    oImg(0,0) = 90;
+    oImg(0,1) = 50;
+    oImg(1,0) = 107;
+    oImg(1,1) = 71;
+    oImg.save("imagen_pruebas.pgm");
+    
+    GreyImage oPrediction = fixed_prediction(oImg);
+    GreyImage oError = oImg - oPrediction;
+    oPrediction.save("image_pruebas_prediccion.pgm");
+
+    for(int row = 0; row < oPrediction.getHeight() ; ++row )
+        for(int col = 0; col < oPrediction.getWidth() ; ++col )
+        {
+            cout << "Img : ( " << row << ", " << col << ") = " << (int)oImg(row,col) << endl;
+            cout << "Pred : ( " << row << ", " << col << ") = " << (int)oPrediction(row,col) << endl;
+            cout << "Error : ( " << row << ", " << col << ") = " << (int)oError(row,col) << endl;
+            cout << endl;
+        }
 
     exit(0);
+
 }

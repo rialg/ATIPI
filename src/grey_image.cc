@@ -138,3 +138,75 @@ GreyImage::~GreyImage()
         delete[] imageMat;
     
 };
+
+/// @brief Operador de adición
+GreyImage& GreyImage::operator+=( const GreyImage& oDer )
+{
+
+    /// Check dimensions
+    if( this->getHeight() != oDer.getHeight() ||
+        this->getWidth() != oDer.getWidth() )
+        throw new InvalidDimensionsException();
+
+    for(int row = 0; row < this->getHeight(); ++row )
+        for(int col = 0; col < this->getWidth(); ++col )
+            (*this)(row, col) += oDer(row, col);
+
+    return *this;
+
+}
+
+/// @brief Operador de substracción
+GreyImage& GreyImage::operator-=(const GreyImage& oDer)
+{
+
+    /// Check dimensions
+    if( this->getHeight() != oDer.getHeight() ||
+        this->getWidth() != oDer.getWidth() )
+        throw new InvalidDimensionsException();
+
+    for(int row = 0; row < this->getHeight(); ++row )
+        for(int col = 0; col < this->getWidth(); ++col )
+            (*this)(row, col) += oDer(row, col);
+
+    return *this;
+
+}
+
+/// @brief Operador de adición
+GreyImage& operator+(const GreyImage& oIzq, const GreyImage& oDer)
+{
+
+    /// Check dimensions
+    if( oIzq.getHeight() != oDer.getHeight() ||
+        oIzq.getWidth() != oDer.getWidth() )
+        throw new InvalidDimensionsException();
+
+    GreyImage* oRet = new GreyImage(oIzq.getHeight(), oIzq.getWidth());
+
+    for(int row = 0; row < oIzq.getHeight(); ++row )
+        for(int col = 0; col < oIzq.getWidth(); ++col )
+            (*oRet)(row, col) = oIzq(row, col) + oDer(row, col);
+
+    return *oRet;
+
+}
+
+/// @brief Operador de substracción
+GreyImage& operator-(const GreyImage& oIzq, const GreyImage& oDer)
+{
+
+    /// Check dimensions
+    if( oIzq.getHeight() != oDer.getHeight() ||
+        oIzq.getWidth() != oDer.getWidth() )
+        throw new InvalidDimensionsException();
+
+    GreyImage* oRet = new GreyImage(oIzq.getHeight(), oIzq.getWidth());
+
+    for(int row = 0; row < oIzq.getHeight(); ++row )
+        for(int col = 0; col < oIzq.getWidth(); ++col )
+            (*oRet)(row, col) = oIzq(row, col) - oDer(row, col);
+
+    return *oRet;
+
+}

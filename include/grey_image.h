@@ -36,6 +36,10 @@ class GreyImage
         const uint8_t& operator()(size_t row, size_t col) const { return imageMat[ row * height + col ]; };
         ///@brief Método de acceso sin modificar valor
         const uint8_t& operator[](size_t position) const { return imageMat[ position ]; };
+        /// @brief Operador de adición
+        GreyImage& operator+=(const GreyImage& oDer);
+        /// @brief Operador de substracción
+        GreyImage& operator-=(const GreyImage& oDer);
         ///@brief Método para guardar imageMat en un archivo PGM
         void save(const char* fileName);
         ///@brief Accessor
@@ -53,6 +57,16 @@ class GreyImage
 };
 
 /**
+ * @brief Operador de adición
+*/
+GreyImage& operator+(const GreyImage& oIzq, const GreyImage& oDer);
+
+/**
+ * @brief Operador de substracción
+*/
+GreyImage& operator-(const GreyImage& oIzq, const GreyImage& oDer);
+
+/**
  * @class InvalidImageFormatException
  * @brief   Excepción usada para controlar que el formato de las imagenes
  *          PGM sea el adecuado, es decir, el número mágico sea "P5"
@@ -68,6 +82,27 @@ class InvalidImageFormatException : public exception
     {
 
         return "El archivo no tiene el formato raw PGM";
+
+    };
+
+};
+
+/**
+ * @class InvalidDimensionsException
+ * @brief   Excepción usada para indicar que se opera con imágenes de
+ *          diferente tamaño
+*/
+class InvalidDimensionsException : public exception
+{
+
+    /**
+     * @brief Explicación del error
+     * @returns Texto explicativo
+    */
+    const char* what() const throw ()
+    {
+
+        return "Se esta operando con imagenes de diferentes dimensiones";
 
     };
 
