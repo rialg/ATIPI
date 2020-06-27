@@ -73,3 +73,25 @@ GreyImage& RiceMapping( int height, int width, int** errorMatrix )
     return *mappings;
 
 }
+
+/**
+ * @brief Codificacion de Golomb
+ * @param [in] K - K value
+ * @param [in] error - error value (mapped by rice)
+ * @returns codification bitset
+*/
+
+std::string GolombCodification( int m, int error )
+{
+    div_t result = div(error, m);
+    std::string codification = std::bitset<8>(result.quot).to_string();
+    for(int i=0; i<result.rem; i++){
+        codification.append("1");
+    }
+    codification.append("0");
+
+    /* Eliminamos los 0s del principio condicionados al bitset<8> */
+    regex reg("^0+(?!$)");
+    codification = regex_replace(codification, reg, "");
+    return codification;
+}

@@ -5,7 +5,9 @@
 #ifndef ATIPI_INCLUDE_GOLOMB_ENCODER_H_
 #define ATIPI_INCLUDE_GOLOMB_ENCODER_H_
 
+#include <bitset>
 #include <cmath>
+#include <regex>
 #include "local_context.h"
 #include "grey_image.h"
 
@@ -26,5 +28,13 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, int** errorMatrix
  * @returns mappings - Mapeo
 */
 GreyImage& RiceMapping( int height, int width, int** errorMatrix );
+
+/**
+ * @brief Codificacion de Golomb
+ * @param [in] K - K value
+ * @param [in] error - error value (mapped by rice)
+ * @returns bits codification vector
+*/
+std::string GolombCodification( int k, int error );
 
 #endif /// < ATIPI_INCLUDE_GOLOMB_ENCODER_H_
