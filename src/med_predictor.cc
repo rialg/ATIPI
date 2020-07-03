@@ -17,13 +17,16 @@ GreyImage& fixed_prediction(const GreyImage& oImage)
     
     GreyImage* oPrediccion = new GreyImage(oImage.getHeight(), oImage.getWidth());
     /// Saltear primera fila
-    for(int row = 1; row < oPrediccion->getHeight() ; ++row)
+    for(int row = 0; row < oPrediccion->getHeight() ; ++row)
     {
         /// Saltear primera columna
-        for(int col = 1; col < oPrediccion->getWidth() ; ++col)
+        for(int col = 0; col < oPrediccion->getWidth() ; ++col)
         {
-            /// Asignar predicción
-            uint8_t a = oImage(row, col-1), b = oImage(row-1, col), c = oImage(row-1, col-1);
+            /// Inicializar el contexto
+            uint8_t b = row == 0 ? 0 : oImage(row-1, col),\
+                    a = col == 0 ? b : oImage(row, col-1),\
+                    c = row == 0 ? 0 : col == 0 ? row-2 > 0 ? oImage(row-2, col) : 0 : oImage(row-1, col-1);
+
             if( c >= max(a,b) )
                 (*oPrediccion)(row, col) = min(a, b);
             else if( c <= min(a,b) )
