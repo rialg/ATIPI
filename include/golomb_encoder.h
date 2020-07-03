@@ -10,6 +10,24 @@
 #include <regex>
 #include "local_context.h"
 #include "grey_image.h"
+#include "med_predictor.h"
+
+using namespace std;
+
+/**
+ * @brief Encode a GreyImage using the golomb encoding
+ * @returns code
+*/
+char* golombEncoding(const GreyImage& oImage, size_t N);
+
+/**
+ * @brief Orden m=2^k del código de Golomb
+ * @param [in] oPixel - Posición del pixel
+ * @param [in] oTable - Tabla de contextos locales
+ * @param [in] oErrorMatrix - Matrix con errores de predicción
+ * @returns m - Orden del código de Golomb para el pixel
+*/
+int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, const GreyImage& errorMatrix );
 
 /**
  * @brief Orden m=2^k del código de Golomb
@@ -19,6 +37,13 @@
  * @returns m - Orden del código de Golomb para el pixel
 */
 int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, int** errorMatrix );
+
+/**
+ * @brief Mapeo de Rice
+ * @param [in] oErrorMatrix - Matrix con errores de predicción
+ * @returns oMappings - Mapeo
+*/
+GreyImage& RiceMapping( const GreyImage& oErrorMatrix );
 
 /**
  * @brief Mapeo de Rice
@@ -35,6 +60,6 @@ GreyImage& RiceMapping( int height, int width, int** errorMatrix );
  * @param [in] error - error value (mapped by rice)
  * @returns bits codification vector
 */
-std::string GolombCodification( int k, int error );
+string GolombCodification( int k, int error );
 
 #endif /// < ATIPI_INCLUDE_GOLOMB_ENCODER_H_

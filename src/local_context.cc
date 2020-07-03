@@ -20,7 +20,7 @@ ContextTable::~ContextTable()
  * @param [in] N - Tamaño del contexto
  * @returns oMask, lista de pixeles en la mascara del contexto local
 */
-static ContextMask& createPixelMask(const int N)
+static ContextMask& createPixelMask(const size_t N)
 {
 
     bool find_all = false;
@@ -101,7 +101,7 @@ static vector<PixelPos>& applyMask(const PixelPos& oPosition, const ContextMask&
  * @param [in] height - Cantidad de filas de pixeles de la imagen
  * @returns oTable, o tabla con pares de desplazamientos
 */
-const ContextTable& getLocalContext(const int N, const int width, const int height)
+const ContextTable& getLocalContext(const size_t N, const int width, const int height)
 {
 
     ContextTable* oTable = new ContextTable();

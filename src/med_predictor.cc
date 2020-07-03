@@ -23,7 +23,7 @@ GreyImage& fixed_prediction(const GreyImage& oImage)
         for(int col = 0; col < oPrediccion->getWidth() ; ++col)
         {
             /// Inicializar el contexto
-            uint8_t b = row == 0 ? 0 : oImage(row-1, col),\
+            int16_t b = row == 0 ? 0 : oImage(row-1, col),\
                     a = col == 0 ? b : oImage(row, col-1),\
                     c = row == 0 ? 0 : col == 0 ? row-2 > 0 ? oImage(row-2, col) : 0 : oImage(row-1, col-1);
 

@@ -96,6 +96,6 @@ class ContextTable : public ContextTableBase
  * @param [in] height - Cantidad de filas de pixeles de la imagen
  * @returns ContextTable, o tabla con pares de desplazamientos
 */
-const ContextTable& getLocalContext(const int N, const int width, const int height);
+const ContextTable& getLocalContext(const size_t N, const int width, const int height);
 
 #endif /// < ATIPI_INCLUDE_LOCAL_CONTEXT_H_

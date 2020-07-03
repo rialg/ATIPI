@@ -31,11 +31,11 @@ class GreyImage
         ~GreyImage();                               /// < Destructor
 
         ///@brief Método de acceso
-        uint8_t& operator()(size_t row, size_t col) { return imageMat[ row * height + col ]; };
+        int16_t& operator()(size_t row, size_t col) { return imageMat[ row * height + col ]; };
         ///@brief Método de acceso sin modificar valor
-        const uint8_t& operator()(size_t row, size_t col) const { return imageMat[ row * height + col ]; };
+        const int16_t& operator()(size_t row, size_t col) const { return imageMat[ row * height + col ]; };
         ///@brief Método de acceso sin modificar valor
-        const uint8_t& operator[](size_t position) const { return imageMat[ position ]; };
+        const int16_t& operator[](size_t position) const { return imageMat[ position ]; };
         /// @brief Operador de adición
         GreyImage& operator+=(const GreyImage& oDer);
         /// @brief Operador de substracción
@@ -52,7 +52,7 @@ class GreyImage
     private:
         int width = 0;                  /// < Ancho de la imagen
         int height = 0;                 /// < Alto de la imagen
-        uint8_t* imageMat = nullptr;   /// < Matriz de pixeles
+        int16_t* imageMat = nullptr;   /// < Matriz de pixeles
 
 };
 

@@ -18,7 +18,7 @@ GreyImage::GreyImage(){};
 GreyImage::GreyImage(int height, int width):
 height{height},
 width{width}, 
-imageMat{new uint8_t[width*height]}
+imageMat{new int16_t[width*height]}
 {
     /// Crear imagen oscura
     for( int i = 0; i < width*height; ++i )
@@ -30,7 +30,7 @@ imageMat{new uint8_t[width*height]}
 GreyImage::GreyImage(const GreyImage& oImg):
 width{oImg.getWidth()}, 
 height{oImg.getHeight()}, 
-imageMat{new uint8_t[oImg.getWidth()*oImg.getHeight()]}
+imageMat{new int16_t[oImg.getWidth()*oImg.getHeight()]}
 {
 
     for( int i = 0; i < width*height; ++i )
@@ -76,7 +76,7 @@ GreyImage::GreyImage(const char* imageFile)
     height = stoi(line.substr(line.find(" "), line.length() ));
     
     /// Crear arreglo de la imagen
-    imageMat = new uint8_t[width*height];
+    imageMat = new int16_t[width*height];
     
     getline(oImageStream, line); /// < Descartar max_val
     getline(oImageStream, line); /// < Tomar bytes de la imagen
@@ -85,7 +85,7 @@ GreyImage::GreyImage(const char* imageFile)
     for(char c : line)
     {
      
-        imageMat[row*height+col] = (uint8_t) c;
+        imageMat[row*height+col] = (int16_t) c;
         col++;
 
         if ( col % width == 0 )

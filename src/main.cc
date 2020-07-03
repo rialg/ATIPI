@@ -30,12 +30,13 @@ static int** initialize_errors_matrix(int height, int width){
 int main(int argc, char *argv[])
 {
   
-    /*
-    GreyImage oIMG("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
-    GreyImage oPrediction = fixed_prediction(oIMG);
-    oIMG.save("original_img.pgm");
-    oPrediction.save("med_new.pgm");
+    
+    //GreyImage oIMG("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
 
+    //GreyImage oPrediction = fixed_prediction(oIMG);
+    //oIMG.save("original_img.pgm");
+    //oPrediction.save("med_new.pgm");
+    /*
     int** errors = initialize_errors_matrix(oIMG.getHeight(),oIMG.getWidth());
     calculate_errors(oIMG, oPrediction, errors);
     printf("error on (row,col) (15,15) %i", errors[15][15]);
@@ -70,11 +71,13 @@ int main(int argc, char *argv[])
     GreyImage oMap{ RiceMapping(oPrediction.getHeight(), oPrediction.getWidth(), errors) };
     oMap.save("errors_img.pgm");
     */
+    
     GreyImage oImg{2 , 2};
     oImg(0,0) = 90;
     oImg(0,1) = 50;
     oImg(1,0) = 107;
     oImg(1,1) = 71;
+    /*
     oImg.save("imagen_pruebas.pgm");
     
     GreyImage oPrediction = fixed_prediction(oImg);
@@ -89,6 +92,9 @@ int main(int argc, char *argv[])
             cout << "Error : ( " << row << ", " << col << ") = " << (int)oError(row,col) << endl;
             cout << endl;
         }
+    */
+
+    cout << golombEncoding(oImg, 2) << endl;
 
     exit(0);
 
