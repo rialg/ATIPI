@@ -65,7 +65,7 @@ GreyImage& RiceMapping( int height, int width, int** errorMatrix )
             int error = errorMatrix[row][width];
 
             if( error < 0 )
-                (*mappings)(row, col) = -2 * error + 1;
+                (*mappings)(row, col) = -2 * error - 1;
             else
                 (*mappings)(row, col) = 2 * error;
 
