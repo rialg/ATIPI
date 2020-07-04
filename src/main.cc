@@ -31,10 +31,9 @@ int main(int argc, char *argv[])
 {
   
     
-    //GreyImage oIMG("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
-
-    //GreyImage oPrediction = fixed_prediction(oIMG);
-    //oIMG.save("original_img.pgm");
+    GreyImage oImg("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
+    //GreyImage oPrediction = fixed_prediction(oImg);
+    //oImg.save("original_img.pgm");
     //oPrediction.save("med_new.pgm");
     /*
     int** errors = initialize_errors_matrix(oIMG.getHeight(),oIMG.getWidth());
@@ -70,14 +69,13 @@ int main(int argc, char *argv[])
 
     GreyImage oMap{ RiceMapping(oPrediction.getHeight(), oPrediction.getWidth(), errors) };
     oMap.save("errors_img.pgm");
-    */
-    
+
     GreyImage oImg{2 , 2};
     oImg(0,0) = 90;
     oImg(0,1) = 50;
     oImg(1,0) = 107;
     oImg(1,1) = 71;
-    /*
+
     oImg.save("imagen_pruebas.pgm");
     
     GreyImage oPrediction = fixed_prediction(oImg);

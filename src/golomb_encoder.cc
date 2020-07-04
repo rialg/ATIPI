@@ -5,6 +5,8 @@
 
 #include "golomb_encoder.h"
 
+using namespace std;
+
 /**
  * @brief Orden m=2^k del código de Golomb
  * @param [in] oPixel - Posición del pixel
@@ -19,7 +21,7 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, const GreyImage& 
     try {
 
         if( oTable[ oPixel ].empty() )
-            return 2 << (3 - 1); /// < m = 2^3
+            return 1 << 3; /// < m = 2^3
         else
         {
 
@@ -35,7 +37,7 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, const GreyImage& 
 
             }
 
-            return 2 << (static_cast<int>( ceil( log2(A/n) )) - 1); /// m = 2^k
+            return 1 << static_cast<int>( ceil( log2(A/n) )); /// m = 2^k
 
         }
 
@@ -61,7 +63,7 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, int** errorMatrix
     try {
 
         if( oTable[ oPixel ].empty() )
-            return 2 << (3 - 1); /// < m = 2^3
+            return 1 << 3; /// < m = 2^3
         else
         {
 
@@ -77,7 +79,7 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, int** errorMatrix
 
             }
 
-            return 2 << (static_cast<int>( ceil( log2(A/n) )) - 1); /// m = 2^k
+            return 1 << static_cast<int>( ceil( log2(A/n) )); /// m = 2^k
 
         }
 
