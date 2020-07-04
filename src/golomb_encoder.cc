@@ -5,8 +5,6 @@
 
 #include "golomb_encoder.h"
 
-using namespace std;
-
 /**
  * @brief Orden m=2^k del código de Golomb
  * @param [in] oPixel - Posición del pixel
@@ -158,19 +156,34 @@ char* golombEncoding(const GreyImage& oImage, size_t N)
     for(int row = 0; row < oImage.getHeight() ; ++row)
         for(int col = 0; col < oImage.getWidth() ; ++col)
         {
-
             int m = getCodeOrder(PixelPos{row, col} , oTable, oError);
+            div_t result = div(oRiceMap(row, col), m);
+            string codification{""};
+            if( m > 1 )
+            {
+                int exp = result.rem > 0 ? floor(log2((double) result.rem)) : 0;
+                int rem = result.rem > 0 ? result.rem - (1 << exp) : 0;
+                codification = result.rem > 0 ? "0" : "1";
 
-            div_t result = div(oError(row, col), m);
-            string codification = bitset<8>(result.quot).to_string();
-            for(int i=0; i<result.rem; i++){
-                codification.append("1");
+                for(int i = 0; i < exp; ++i )
+                    codification += "0";
+
+                while(rem > 0)
+                {
+
+                    exp = floor(log2((double) rem));
+                    rem -= 1 << exp;
+                    codification[codification.length() - 1 - exp] = '1';
+
+                }
+                int k = ceil(log2((double) m));
+                for(int j=0; j < k - codification.length(); ++j)
+                    codification = "0"+codification;
             }
-            codification.append("0");
-
-            /* Eliminamos los 0s del principio condicionados al bitset<8> */
-            regex reg("^0+(?!$)");
-            codification = regex_replace(codification, reg, "");
+            for(int i=0; i<result.quot; i++){
+                codification = "0"+codification;
+            }
+            codification = "1"+codification;
 
             sCode += codification;
         }
