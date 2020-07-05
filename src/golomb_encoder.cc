@@ -191,9 +191,9 @@ char* golombEncoding(const GreyImage& oImage, size_t N)
 
             /// uni(rice div m)
             for(int i=0; i<result.quot; i++){
-                codification = "0"+codification;
+                codification += "0";
             }
-            codification = "1"+codification;
+            codification += "1";
             //cout << "cod " << codification << endl;
             sCode += codification;
         }

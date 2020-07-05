@@ -6,6 +6,7 @@
 
 #include <string>
 #include <cstdint>
+#include <cstdlib>
 #include "grey_image.h"
 #include "local_context.h"
 #include "med_predictor.h"
