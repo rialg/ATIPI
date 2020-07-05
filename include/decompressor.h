@@ -22,6 +22,6 @@ using namespace std;
  * @param N [in] - Tamaño de los contextos
  * @returns Imagen descomprimida
 */
-GreyImage& decompress(const char* code, int height, int width, size_t N);
+GreyImage& decompress(const string& code, int height, int width, size_t N);
 
 #endif /// < ATIPI_INCLUDE_DECOMPRESSOR_H_
