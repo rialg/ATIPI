@@ -4,6 +4,9 @@
  */
 
 #include "golomb_encoder.h"
+//#include <iostream>
+
+//using namespace std;
 
 /**
  * @brief Orden m=2^k del código de Golomb
@@ -158,12 +161,16 @@ char* golombEncoding(const GreyImage& oImage, size_t N)
         {
             int m = getCodeOrder(PixelPos{row, col} , oTable, oError);
             div_t result = div(oRiceMap(row, col), m);
+            //cout << "RiceMapping " << oRiceMap(row, col) << " m " << m << endl;
             string codification{""};
+
+            /// bin(rice mod m)
             if( m > 1 )
             {
+                //cout << "rem " << result.rem << endl;
                 int exp = result.rem > 0 ? floor(log2((double) result.rem)) : 0;
                 int rem = result.rem > 0 ? result.rem - (1 << exp) : 0;
-                codification = result.rem > 0 ? "0" : "1";
+                codification = result.rem > 0 ? "1" : "0";
 
                 for(int i = 0; i < exp; ++i )
                     codification += "0";
@@ -179,12 +186,15 @@ char* golombEncoding(const GreyImage& oImage, size_t N)
                 int k = ceil(log2((double) m));
                 for(int j=0; j < k - codification.length(); ++j)
                     codification = "0"+codification;
+            //cout << "bin " << codification << endl;
             }
+
+            /// uni(rice div m)
             for(int i=0; i<result.quot; i++){
                 codification = "0"+codification;
             }
             codification = "1"+codification;
-
+            //cout << "cod " << codification << endl;
             sCode += codification;
         }
 
