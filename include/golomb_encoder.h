@@ -6,11 +6,13 @@
 #define ATIPI_INCLUDE_GOLOMB_ENCODER_H_
 
 #include <bitset>
+#include <vector>
 #include <cmath>
 #include <regex>
 #include "local_context.h"
 #include "grey_image.h"
 #include "med_predictor.h"
+#include "iostream"
 
 using namespace std;
 
@@ -60,6 +62,6 @@ GreyImage& RiceMapping( int height, int width, int** errorMatrix );
  * @param [in] error - error value (mapped by rice)
  * @returns bits codification vector
 */
-string GolombCodification( int k, int error );
+vector<bool> GolombCodification( int k, int error );
 
 #endif /// < ATIPI_INCLUDE_GOLOMB_ENCODER_H_

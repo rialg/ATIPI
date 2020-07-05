@@ -207,17 +207,34 @@ char* golombEncoding(const GreyImage& oImage, size_t N)
  * @param [in] error - error value (mapped by rice)
  * @returns codification bitset
 */
-string GolombCodification( int m, int error )
+vector<bool> GolombCodification( int m, int error )
 {
-    div_t result = div(error, m);
-    string codification = bitset<8>(result.quot).to_string();
-    for(int i=0; i<result.rem; i++){
-        codification.append("1");
-    }
-    codification.append("0");
+    vector<bool> codification;
+    int bits = log2(m);
 
-    /* Eliminamos los 0s del principio condicionados al bitset<8> */
-    regex reg("^0+(?!$)");
-    codification = regex_replace(codification, reg, "");
+    div_t result = div(error, m);
+    string binary = bitset<8>(result.rem).to_string();
+
+
+    // Pusheamos unary
+    for(int i=0; i<result.quot; i++){
+        codification.push_back(true);
+    }
+    codification.push_back(false);
+
+    //Pusheamos binary, empezamos en (8-bits) para tener log2(m) bits codificando el resto.
+    for(int j=(8-bits); j<binary.size(); j++){
+        if (binary[j]=='1'){
+            codification.push_back(true);
+        }else {
+            codification.push_back(false);
+        }
+    }
+
+    // cout << "The vector is:" << endl << "    ";
+    // for (const auto& b : codification) {
+    //     cout << b << " ";
+    // }
+    // cout << endl;    
     return codification;
 }
