@@ -12,6 +12,7 @@
 #include "local_context.h"
 #include "golomb_encoder.h"
 #include "decompressor.h"
+#include "file_handler.h"
 
 /// Usar namespace de la biblioteca estándar
 using namespace std;
@@ -87,6 +88,9 @@ int main(int argc, char *argv[])
             cout << endl;
         }
     */
+    // copy to file test
+    // vector<bool> bits{false, true, false, false, false, false, false, true, false, true, false, false, false, false, true };
+    // copy_to_file("archivo", "P5", 10, 10,  4, bits);
     exit(0);
 
 }
