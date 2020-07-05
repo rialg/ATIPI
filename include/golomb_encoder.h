@@ -20,7 +20,7 @@ using namespace std;
  * @brief Encode a GreyImage using the golomb encoding
  * @returns code
 */
-char* golombEncoding(const GreyImage& oImage, size_t N);
+const string& golombEncoding(const GreyImage& oImage, size_t N);
 
 /**
  * @brief Orden m=2^k del código de Golomb

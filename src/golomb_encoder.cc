@@ -127,7 +127,7 @@ GreyImage& RiceMapping( const GreyImage& oErrorMatrix )
     GreyImage* oMappings = new GreyImage( oErrorMatrix.getHeight(), oErrorMatrix.getWidth());
     for( int row = 0; row < oMappings->getHeight() ; ++row )
         for ( int col = 0; col <  oMappings->getWidth(); ++col )
-            (*oMappings)(row, col) = oErrorMatrix(row, col) > 0 ? 2 * oErrorMatrix(row, col) : -2 * oErrorMatrix(row, col) - 1;
+            (*oMappings)(row, col) = oErrorMatrix(row, col) >= 0 ? 2 * oErrorMatrix(row, col) : -2 * oErrorMatrix(row, col) - 1;
 
     return *oMappings;
 }
@@ -136,7 +136,7 @@ GreyImage& RiceMapping( const GreyImage& oErrorMatrix )
  * @brief Encoding function
  * @returns code
 */
-char* golombEncoding(const GreyImage& oImage, size_t N)
+const string& golombEncoding(const GreyImage& oImage, size_t N)
 {
 
     /// 1. Apply MED
@@ -152,7 +152,7 @@ char* golombEncoding(const GreyImage& oImage, size_t N)
     ContextTable oTable{ getLocalContext( N, oImage.getWidth(), oImage.getHeight()) };
 
     /// 5. Calculate the compressed image code
-    string sCode = "";
+    string* sCode = new string("");
     for(int row = 0; row < oImage.getHeight() ; ++row)
         for(int col = 0; col < oImage.getWidth() ; ++col)
         {
@@ -190,12 +190,13 @@ char* golombEncoding(const GreyImage& oImage, size_t N)
                 codification += "0";
             }
             codification += "1";
-            sCode += codification;
+
+            (*sCode) += codification;
             codification.clear();
 
         }
+    return (*sCode);
 
-    return const_cast<char*>(sCode.c_str());
 }
 
 /**
