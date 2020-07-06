@@ -8,6 +8,8 @@ add_library(ContextSignMatrix context_sign_matrix.cc)
 add_library(LocalContext local_context.cc)
 add_library(GolombEncoder golomb_encoder.cc)
 add_library(Decompressor decompressor.cc)
+add_library(FileHandler file_handler.cc)
+
 
 add_executable(Compressor main.cc)
 
@@ -29,6 +31,7 @@ target_link_libraries(Compressor PUBLIC ContextSignMatrix)
 target_link_libraries(Compressor PUBLIC LocalContext)
 target_link_libraries(Compressor PUBLIC GolombEncoder)
 target_link_libraries(Compressor PUBLIC Decompressor)
+target_link_libraries(Compressor PUBLIC FileHandler)
 target_include_directories(Compressor PUBLIC
                             ${Compressor_BINARY_DIR}
                             ${Compressor_SOURCE_DIR}/src)
