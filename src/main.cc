@@ -31,14 +31,13 @@ static int** initialize_errors_matrix(int height, int width){
 int main(int argc, char *argv[])
 {
     
-    GreyImage oImg("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
-    //GreyImage oPrediction = fixed_prediction(oImg);
+    //GreyImage oImg("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
 
-    /*GreyImage oImg{6 , 6};
+    GreyImage oImg{6 , 6};
     oImg(0,0) = 42;
     oImg(0,1) = 84;
-    oImg(0,2) = 122;
-    oImg(0,3) = 133;
+    oImg(0,2) = 42;
+    oImg(0,3) = 84;
     oImg(0,4) = 244;
     oImg(0,5) = 254;
     oImg(1,0) = 200;
@@ -71,7 +70,7 @@ int main(int argc, char *argv[])
     oImg(5,3) = 38;
     oImg(5,4) = 30;
     oImg(5,5) = 242;
-    GreyImage oPred = fixed_prediction(oImg);*/
+    //GreyImage oPred = fixed_prediction(oImg);
     string compressCode{golombEncoding(oImg, 5)};
     //cout << "Compressed code: " << compressCode << endl;
 
@@ -85,8 +84,8 @@ int main(int argc, char *argv[])
             cout << "Img : ( " << row << ", " << col << ") = " << (int)oImg(row,col) << endl;
             cout << "Decompress : ( " << row << ", " << col << ") = " << (int)oDecompress(row,col) << endl;
             cout << endl;
-        }
-    */
+        }*/
+
     exit(0);
 
 }

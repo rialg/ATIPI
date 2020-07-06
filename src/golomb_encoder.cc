@@ -179,8 +179,8 @@ const string& golombEncoding(const GreyImage& oImage, size_t N)
                     codification[codification.length() - 1 - exp] = '1';
 
                 }
-                int k = ceil(log2((double) m));
-                for(int j=0; j < k - codification.length(); ++j)
+                int pending = ceil(log2((double) m)) - codification.length();
+                for(int j=0; j < pending; j++)
                     codification = "0"+codification;
 
             }
@@ -229,10 +229,10 @@ vector<bool> GolombCodification( int m, int error )
         }
     }
 
-    // cout << "The vector is:" << endl << "    ";
+    // //cout << "The vector is:" << endl << "    ";
     // for (const auto& b : codification) {
-    //     cout << b << " ";
+    //     //cout << b << " ";
     // }
-    // cout << endl;    
+    // //cout << endl;    
     return codification;
 }

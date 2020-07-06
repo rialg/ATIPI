@@ -28,6 +28,7 @@ inline static int16_t inverseRiceMapping(int mappedError)
 */
 GreyImage& decompress(const string& code, int height, int width, size_t N)
 {
+
     /// Imagen a descomprimir
     GreyImage* oRet = new GreyImage(height, width);
 
@@ -81,6 +82,7 @@ GreyImage& decompress(const string& code, int height, int width, size_t N)
                     /// Recuperar pixel
                     int16_t error = inverseRiceMapping(quot*m+rem);
                     GreyImage oPred = fixed_prediction(*oRet);
+
                     (*oRet)(row, col) = error + oPred(row, col);
                     if( (col+1) % width == 0 )
                     {
