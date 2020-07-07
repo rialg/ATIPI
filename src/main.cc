@@ -29,6 +29,19 @@ static int** initialize_errors_matrix(int height, int width){
       return errors;
 }
 
+static inline const vector<bool>& transformData( const string& code )
+{
+
+    // Test
+    vector<char> cBits(code.begin(), code.end());
+    vector<bool>* bBits = new vector<bool>();
+    for(const char& c: cBits)
+        bBits->push_back( c == '1');
+
+    return *bBits;
+
+}
+
 int main(int argc, char *argv[])
 {
     
@@ -75,6 +88,8 @@ int main(int argc, char *argv[])
     string compressCode{golombEncoding(oImg, 5)};
     //cout << "Compressed code: " << compressCode << endl;
 
+    copy_to_file("archivo_comprimido", "P5", oImg.getHeight(), oImg.getWidth(),  5, transformData(compressCode));
+
     GreyImage oDecompress = decompress( compressCode, oImg.getHeight(), oImg.getWidth(), 5);
 
     oImg.save("original.pgm");
@@ -87,9 +102,7 @@ int main(int argc, char *argv[])
             cout << endl;
         }
     */
-    // copy to file test
-    // vector<bool> bits{false, true, false, false, false, false, false, true, false, true, false, false, false, false, true };
-    // copy_to_file("archivo", "P5", 10, 10,  4, bits);
+
     exit(0);
 
 }
