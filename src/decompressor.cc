@@ -47,7 +47,18 @@ GreyImage& decompress(const string& code, int height, int width, size_t N)
 
             /// Calcular m
             GreyImage oErrorTemp = (*oRet) - fixed_prediction(*oRet);
-            m = getCodeOrder( PixelPos{row, col}, oTable, oErrorTemp);
+            try
+            {
+
+                m = getCodeOrder( PixelPos{row, col}, oTable, oErrorTemp);
+
+            } catch (InvalidPixelPositionException* e) {
+
+                /// Nos encontramos con el padding
+                break;
+
+            }
+
             k = ceil(log2((double) m));
 
             buffer = string{bit};
@@ -107,7 +118,6 @@ GreyImage& decompress(const string& code, int height, int width, size_t N)
         }
 
     }
-
     return *oRet;
 
 }

@@ -85,13 +85,17 @@ int main(int argc, char *argv[])
     oImg(5,4) = 30;
     oImg(5,5) = 242;
     //GreyImage oPred = fixed_prediction(oImg);
+    /// Comprimir archivo
     string compressCode{golombEncoding(oImg, 5)};
-    //cout << "Compressed code: " << compressCode << endl;
-
+    //cout << "code1>" << compressCode << endl;
     copy_to_file("archivo_comprimido", "P5", oImg.getHeight(), oImg.getWidth(),  5, transformData(compressCode));
 
-    GreyImage oDecompress = decompress( compressCode, oImg.getHeight(), oImg.getWidth(), 5);
+    /// Descomprimir archivo
+    compressData oCompressData{ read_compressed("archivo_comprimido.loco") };
+    //cout << "code2>" << get<0>(oCompressData) << endl;
+    GreyImage oDecompress = decompress( get<0>(oCompressData), get<1>(oCompressData), get<2>(oCompressData), get<3>(oCompressData));
 
+    /// Guardar en imagenes
     oImg.save("original.pgm");
     oDecompress.save("decompress.pgm");
     /*for(int row = 0; row < oImg.getHeight() ; ++row )

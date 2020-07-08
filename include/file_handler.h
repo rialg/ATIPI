@@ -9,8 +9,14 @@
 #include <string>
 #include <iostream>
 #include <bitset>
+#include <tuple>
+#include "grey_image.h"
 
 using namespace std;
+
+/// @brief Alias de tipo
+/// tupla con: código, alto, ancho y tamaño del contexto (N)
+using compressData = tuple<string,int, int, int>;
 
 /**
  * @brief funcion que escribe bytes en archivo 
@@ -23,5 +29,13 @@ using namespace std;
  * @returns 0
 */
 void copy_to_file(string filename, string type, int width, int height, int n, vector<bool> bits);
+
+/**
+ * @brief   Leer el stream de bytes del archivo comprimido y
+ *          y devolver el código (y metadatos) en una tupla
+ * @param filePath [in] - Ruta (absoluta) al fichero comprimido
+ * @returns tupla con código y metadatos
+*/
+const compressData& read_compressed(const char* filePath);
 
 #endif /// < ATIPI_INCLUDE_FILE_HANDLER_H_

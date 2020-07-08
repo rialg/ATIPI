@@ -12,7 +12,7 @@
 */
 void copy_to_file(string filename, string type, int width, int height,  int n, vector<bool> bits){
     ofstream pgmFile;
-    pgmFile.open (filename + ".pgm");
+    pgmFile.open (filename + ".loco");
     pgmFile << type << endl << width << " " << height << endl << n << endl; // first lines
     
     string c;
@@ -36,7 +36,6 @@ void copy_to_file(string filename, string type, int width, int height,  int n, v
                 c.append(byte[j] ? "1" : "0") ;
             }
             string missing = std::string(missing_bits, '0');
-
             bitset<8> byte_char(c + missing);
             char final_char = static_cast<char>( byte_char.to_ulong());
             pgmFile << final_char;
@@ -44,5 +43,50 @@ void copy_to_file(string filename, string type, int width, int height,  int n, v
     }
 
     pgmFile.close();
+
+}
+
+/**
+ * @brief   Leer el stream de bytes del archivo comprimido y
+ *          y devolver el código (y metadatos) en una tupla
+ * @param filePath [in] - Ruta (absoluta) al fichero comprimido
+ * @returns tupla con código y metadatos
+*/
+const compressData& read_compressed(const char* filePath)
+{
+
+    string* code = new string();
+
+    /// Read file
+    ifstream oCompressedImage(filePath, ios::binary);
+
+    /// Get decompressed image file size
+    string line;
+    getline(oCompressedImage, line);
+
+    if( line.compare("P5") != 0 && line.compare("P4") != 0 ) /// Check format
+        throw new InvalidImageFormatException();
+
+    line.clear();
+    getline(oCompressedImage, line);
+    int width = stoi(line.substr(0, line.find(" "))); // => To uncomment latter
+    int height = stoi(line.substr(line.find(" "), line.length() )); // => To uncomment latter
+
+    line.clear();
+    getline(oCompressedImage, line);
+    int N = stoi(line.substr(0, line.find(" ")));
+
+    char c = oCompressedImage.get();
+    while( !oCompressedImage.eof() )
+    {
+
+        for( int i = 7; i >= 0; --i )
+            (*code) += string{ (c & ( 1 << i )) ? "1" : "0" };
+
+        oCompressedImage.get(c);
+    }
+
+    compressData* oCompressData = new compressData(*code, height, width, N);
+    return *oCompressData;
 
 }

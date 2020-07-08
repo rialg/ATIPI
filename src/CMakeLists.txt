@@ -16,6 +16,8 @@ add_executable(Compressor main.cc)
 target_link_libraries(MedPredictor PUBLIC GreyImage)
 target_link_libraries(ErrorCalculator PUBLIC GreyImage)
 target_link_libraries(ContextSignMatrix PUBLIC GreyImage)
+target_link_libraries(FileHandler PUBLIC GreyImage)
+
 target_link_libraries(GolombEncoder PUBLIC GreyImage)
 target_link_libraries(GolombEncoder PUBLIC LocalContext)
 
