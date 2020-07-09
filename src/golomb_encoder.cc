@@ -35,10 +35,10 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, const GreyImage& 
 
             }
             /// Caso A < n
-            if( (A/n) <= 0 )
-                return 1;
+            int k;
+            for ( k=0; (n<<k)< A; k++ );
 
-            return 1 << static_cast<int>( ceil( log2(A/n) )); /// m = 2^k
+            return 1 << k;
 
         }
 
@@ -80,10 +80,10 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, int** errorMatrix
 
             }
             /// Caso A < n
-            if( (A/n) <= 0 )
-                return 1;
+            int k;
+            for ( k=0; (n<<k)< A; k++ );
 
-            return 1 << static_cast<int>( ceil( log2(A/n) )); /// m = 2^k
+            return 1 << k;
 
         }
 
