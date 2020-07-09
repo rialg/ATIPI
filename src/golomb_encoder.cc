@@ -26,7 +26,7 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, const GreyImage& 
             /// < Cantidad de errores de predicción
             int n = oTable[oPixel].size();
             /// < Suma de valores absolutos de errores de predicción
-            double A = 0;
+            int A = 0;
 
             for (const auto& oNeighbour : oTable[oPixel] )
             {
@@ -34,6 +34,9 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, const GreyImage& 
                 A += abs( oErrorMatrix(oNeighbour.first, oNeighbour.second) );
 
             }
+            /// Caso A < n
+            if( (A/n) <= 0 )
+                return 1;
 
             return 1 << static_cast<int>( ceil( log2(A/n) )); /// m = 2^k
 
@@ -68,7 +71,7 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, int** errorMatrix
             /// < Cantidad de errores de predicción
             int n = oTable[oPixel].size();
             /// < Suma de valores absolutos de errores de predicción
-            double A = 0;
+            int A = 0;
 
             for (const auto& oNeighbour : oTable[oPixel] )
             {
@@ -76,6 +79,9 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, int** errorMatrix
                 A += abs( errorMatrix[oNeighbour.first][oNeighbour.second] );
 
             }
+            /// Caso A < n
+            if( (A/n) <= 0 )
+                return 1;
 
             return 1 << static_cast<int>( ceil( log2(A/n) )); /// m = 2^k
 

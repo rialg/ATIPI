@@ -60,7 +60,6 @@ GreyImage& decompress(const string& code, int height, int width, size_t N)
             }
 
             k = ceil(log2((double) m));
-
             buffer = string{bit};
             newPixel = false;
             k--;

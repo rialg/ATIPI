@@ -45,8 +45,8 @@ static inline const vector<bool>& transformData( const string& code )
 int main(int argc, char *argv[])
 {
     
-    //GreyImage oImg("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
-
+    GreyImage oImg("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
+/*
     GreyImage oImg{6 , 6};
     oImg(0,0) = 42;
     oImg(0,1) = 84;
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     oImg(5,2) = 226;
     oImg(5,3) = 38;
     oImg(5,4) = 30;
-    oImg(5,5) = 242;
+    oImg(5,5) = 242;*/
     //GreyImage oPred = fixed_prediction(oImg);
     /// Comprimir archivo
     string compressCode{golombEncoding(oImg, 5)};
