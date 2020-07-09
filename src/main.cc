@@ -42,29 +42,44 @@ static inline const vector<bool>& transformData( const string& code )
 
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     
-    GreyImage oImg("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
+    if(argc < 3)
+    {
 
-    /*GreyImage oImg{6 , 6};
+        cout << "USAGE: Compressor <image-path> <N>" << endl;
+        exit(-1);
+
+    }
+
+    GreyImage oImg( argv[1] );
+
+    /*GreyImage oImg{8 , 8};
     oImg(0,0) = 42;
     oImg(0,1) = 84;
     oImg(0,2) = 42;
     oImg(0,3) = 84;
     oImg(0,4) = 244;
     oImg(0,5) = 254;
+    oImg(0,6) = 244;
+    oImg(0,7) = 254;
     oImg(1,0) = 200;
     oImg(1,1) = 150;
     oImg(1,2) = 26;
     oImg(1,3) = 68;
     oImg(1,4) = 20;
     oImg(1,5) = 25;
+    oImg(1,6) = 150;
+    oImg(1,7) = 26;
     oImg(2,0) = 142;
     oImg(2,1) = 184;
     oImg(2,2) = 26;
     oImg(2,3) = 138;
     oImg(2,4) = 78;
+    oImg(2,5) = 78;
+    oImg(2,6) = 138;
+    oImg(2,7) = 78;
     oImg(2,5) = 22;
     oImg(3,0) = 2;
     oImg(3,1) = 4;
@@ -72,23 +87,46 @@ int main(int argc, char *argv[])
     oImg(3,3) = 198;
     oImg(3,4) = 219;
     oImg(3,5) = 251;
+    oImg(3,6) = 111;
+    oImg(3,7) = 82;
     oImg(4,0) = 111;
     oImg(4,1) = 82;
     oImg(4,2) = 116;
     oImg(4,3) = 148;
     oImg(4,4) = 10;
     oImg(4,5) = 22;
+    oImg(4,6) = 148;
+    oImg(4,7) = 10;
     oImg(5,0) = 4;
     oImg(5,1) = 81;
     oImg(5,2) = 226;
     oImg(5,3) = 38;
     oImg(5,4) = 30;
-    oImg(5,5) = 242;*/
+    oImg(5,5) = 242;
+    oImg(5,6) = 81;
+    oImg(5,7) = 226;
+    oImg(6,0) = 200;
+    oImg(6,1) = 150;
+    oImg(6,2) = 26;
+    oImg(6,3) = 68;
+    oImg(6,4) = 20;
+    oImg(6,6) = 244;
+    oImg(6,7) = 254;
+    oImg(7,2) = 116;
+    oImg(7,3) = 148;
+    oImg(7,4) = 10;
+    oImg(7,5) = 22;
+    oImg(7,6) = 148;
+    oImg(7,7) = 10;
+    oImg(7,0) = 4;
+    oImg(7,1) = 81;
+    */
     //GreyImage oPred = fixed_prediction(oImg);
+
     /// Comprimir archivo
     string compressCode{golombEncoding(oImg, 5)};
     //cout << "code1>" << compressCode << endl;
-    copy_to_file("archivo_comprimido", "P5", oImg.getHeight(), oImg.getWidth(),  5, transformData(compressCode));
+    copy_to_file("archivo_comprimido", "P5", oImg.getHeight(), oImg.getWidth(), atoi(argv[2]), transformData(compressCode));
 
     /// Descomprimir archivo
     compressData oCompressData{ read_compressed("archivo_comprimido.loco") };
