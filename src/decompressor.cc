@@ -40,13 +40,14 @@ GreyImage& decompress(const string& code, int height, int width, size_t N)
     bool newPixel = true, startUna = true;
     int row = 0, col = 0, m = 0, k = 0, rem = 0, quot = 0, count = 0;
 
+    GreyImage oErrorTemp{height, width}, oPred{height, width};
+
     for(const auto& bit : sCode )
     {
         if(newPixel)
         {
 
             /// Calcular m
-            GreyImage oErrorTemp = (*oRet) - fixed_prediction(*oRet);
             try
             {
 
@@ -91,9 +92,11 @@ GreyImage& decompress(const string& code, int height, int width, size_t N)
                     quot = count;
                     /// Recuperar pixel
                     int16_t error = inverseRiceMapping(quot*m+rem);
-                    GreyImage oPred = fixed_prediction(*oRet);
+                    update_fixed_prediction( *oRet, PixelPos{row, col}, &oPred);
 
+                    oErrorTemp(row,col) = error;
                     (*oRet)(row, col) = error + oPred(row, col);
+
                     if( (col+1) % width == 0 )
                     {
                         row++;

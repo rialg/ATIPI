@@ -10,10 +10,10 @@ add_library(GolombEncoder golomb_encoder.cc)
 add_library(Decompressor decompressor.cc)
 add_library(FileHandler file_handler.cc)
 
-
 add_executable(Compressor main.cc)
 
 target_link_libraries(MedPredictor PUBLIC GreyImage)
+target_link_libraries(MedPredictor PUBLIC LocalContext)
 target_link_libraries(ErrorCalculator PUBLIC GreyImage)
 target_link_libraries(ContextSignMatrix PUBLIC GreyImage)
 target_link_libraries(FileHandler PUBLIC GreyImage)

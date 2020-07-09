@@ -46,8 +46,8 @@ int main(int argc, char *argv[])
 {
     
     GreyImage oImg("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
-/*
-    GreyImage oImg{6 , 6};
+
+    /*GreyImage oImg{6 , 6};
     oImg(0,0) = 42;
     oImg(0,1) = 84;
     oImg(0,2) = 42;
