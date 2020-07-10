@@ -53,7 +53,7 @@ GreyImage& decompress(const string& code, int height, int width, size_t N)
 
                 m = getCodeOrder( PixelPos{row, col}, oTable, oErrorTemp);
 
-            } catch (InvalidPixelPositionException* e) {
+            } catch (const InvalidPixelPositionException& e) {
 
                 /// Nos encontramos con el padding
                 break;

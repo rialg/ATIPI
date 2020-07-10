@@ -82,7 +82,7 @@ class ContextTable : public ContextTableBase
         */
         vector<PixelPos>& operator[]( const PixelPos& oPixel ){
             if( this->find(oPixel) == this->end() )
-                throw new InvalidPixelPositionException();
+                throw InvalidPixelPositionException();
             else
                 return ContextTableBase::operator[]( oPixel );
         };

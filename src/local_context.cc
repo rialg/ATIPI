@@ -107,9 +107,9 @@ const ContextTable& getLocalContext(const size_t N, const int width, const int h
     ContextTable* oTable = new ContextTable();
     ContextMask oMask{ createPixelMask(N) };
 
-    for(int row = 0; row < width; ++row)
+    for(int row = 0; row < height; ++row)
     {
-        for(int col = 0; col < height; ++col)
+        for(int col = 0; col < width; ++col)
         {
 
             bool find_all = false;

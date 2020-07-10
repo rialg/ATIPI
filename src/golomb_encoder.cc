@@ -42,7 +42,7 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, const GreyImage& 
 
         }
 
-    } catch ( InvalidPixelPositionException* e)
+    } catch ( const InvalidPixelPositionException& e)
     {
 
         throw e;
@@ -87,7 +87,7 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, int** errorMatrix
 
         }
 
-    } catch ( InvalidPixelPositionException* e)
+    } catch ( const InvalidPixelPositionException& e)
     {
 
         throw e;
