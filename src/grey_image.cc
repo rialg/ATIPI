@@ -12,8 +12,8 @@ GreyImage::GreyImage(){};
 
 /**
  * brief Constructor
- * @param [in] width - ancho de la imagen
- * @param [in] height - alto de la imagen
+ * @param width [in] - ancho de la imagen
+ * @param height [in] - alto de la imagen
 */
 GreyImage::GreyImage(int height, int width):
 height{height},
@@ -121,7 +121,7 @@ void GreyImage::save(const char* fileName) const
         for( int col=0; col < width; ++col)
         {
 
-            fOut << (char) imageMat[ row * height + col ];
+            fOut << (char) imageMat[ row * (height - (height-width)) + col ];
 
         }
 

@@ -31,11 +31,11 @@ class GreyImage
         ~GreyImage();                               /// < Destructor
 
         ///@brief Método de acceso
-        int16_t& operator()(size_t row, size_t col) { return imageMat[ row * height + col ]; };
+        int16_t& operator()(size_t row, size_t col) { return imageMat[ row * ( height - (height-width) ) + col ]; };
         ///@brief Método de acceso sin modificar valor
-        const int16_t& operator()(size_t row, size_t col) const { return imageMat[ row * height + col ]; };
+        const int16_t operator()(size_t row, size_t col) const { return imageMat[ row * ( height - (height-width) ) + col ]; };
         ///@brief Método de acceso sin modificar valor
-        const int16_t& operator[](size_t position) const { return imageMat[ position ]; };
+        const int16_t operator[](size_t position) const { return imageMat[ position ]; };
         /// @brief Operador de adición
         GreyImage& operator+=(const GreyImage& oDer);
         /// @brief Operador de substracción
