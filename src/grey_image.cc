@@ -106,7 +106,7 @@ GreyImage::GreyImage(const char* imageFile)
  * @brief Método para guardar imageMat en un archivo PGM
  * @param [in] fileName - nombre del archivo donde se guarda la imagen
 */
-void GreyImage::save(const char* fileName)
+void GreyImage::save(const char* fileName) const
 {
 
     /// Abrir el archivo
@@ -167,7 +167,7 @@ GreyImage& GreyImage::operator-=(const GreyImage& oDer)
 
     for(int row = 0; row < this->getHeight(); ++row )
         for(int col = 0; col < this->getWidth(); ++col )
-            (*this)(row, col) += oDer(row, col);
+            (*this)(row, col) -= oDer(row, col);
 
     return *this;
 

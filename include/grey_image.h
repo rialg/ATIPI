@@ -41,7 +41,7 @@ class GreyImage
         /// @brief Operador de substracción
         GreyImage& operator-=(const GreyImage& oDer);
         ///@brief Método para guardar imageMat en un archivo PGM
-        void save(const char* fileName);
+        void save(const char* fileName) const;
         ///@brief Accessor
         const int getWidth() const { return width; };
         ///@brief Accessor
