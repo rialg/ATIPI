@@ -33,7 +33,7 @@ GreyImage& decompress(const string& code, int height, int width, size_t N)
     GreyImage* oRet = new GreyImage(height, width);
 
     /// Obtener los contextos locales
-    ContextTable oTable{getLocalContext(N, height, width)};
+    ContextTable oTable{getLocalContext(N, width, height)};
 
     /// Empezar el proceso de descompresión
     string sCode{code}, buffer = "";

@@ -124,7 +124,7 @@ int main(int argc, char* argv[])
     //GreyImage oPred = fixed_prediction(oImg);
 
     /// Comprimir archivo
-    string compressCode{golombEncoding(oImg, 5)};
+    string compressCode{golombEncoding(oImg, atoi(argv[2]))};
     //cout << "code1>" << compressCode << endl;
     copy_to_file("archivo_comprimido", "P5", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), transformData(compressCode));
 
