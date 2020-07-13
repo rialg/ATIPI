@@ -64,8 +64,8 @@ const compressData& read_compressed(const char* filePath)
     string line;
     getline(oCompressedImage, line);
 
-    if( line.compare("P5") != 0 && line.compare("P4") != 0 ) /// Check format
-        throw new InvalidImageFormatException();
+    if( line.compare("P5") != 0 && line.compare("P6") != 0 ) /// Check format
+        throw InvalidImageFormatException();
 
     line.clear();
     getline(oCompressedImage, line);

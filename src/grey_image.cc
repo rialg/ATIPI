@@ -85,7 +85,7 @@ GreyImage::GreyImage(const char* imageFile)
     for(char c : line)
     {
      
-        imageMat[row*height+col] = (int16_t) c;
+        imageMat[ row * (height - (height-width)) + col ] = (int16_t) c;
         col++;
 
         if ( col % width == 0 )
