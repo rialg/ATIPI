@@ -53,9 +53,9 @@ int main(int argc, char* argv[])
 
     }
 
-    //GreyImage oImg( argv[1] );
-
-    GreyImage oImg{8 , 6};
+    GreyImage oImg( argv[1] );
+/*
+    GreyImage oImg{4 , 6};
     oImg(0,0) = 42;
     oImg(0,1) = 84;
     oImg(0,2) = 42;
@@ -89,43 +89,43 @@ int main(int argc, char* argv[])
     oImg(3,5) = 251;
     //oImg(3,6) = 111;
     //oImg(3,7) = 82;
-    oImg(4,0) = 111;
-    oImg(4,1) = 82;
-    oImg(4,2) = 116;
-    oImg(4,3) = 148;
-    oImg(4,4) = 10;
-    oImg(4,5) = 22;
+    //oImg(4,0) = 111;
+    //oImg(4,1) = 82;
+    //oImg(4,2) = 116;
+    //oImg(4,3) = 148;
+    //oImg(4,4) = 10;
+    //oImg(4,5) = 22;
     //oImg(4,6) = 148;
     //oImg(4,7) = 10;
-    oImg(5,0) = 4;
-    oImg(5,1) = 81;
-    oImg(5,2) = 226;
-    oImg(5,3) = 38;
-    oImg(5,4) = 30;
-    oImg(5,5) = 242;
+    //oImg(5,0) = 4;
+    //oImg(5,1) = 81;
+    //oImg(5,2) = 226;
+    //oImg(5,3) = 38;
+    //oImg(5,4) = 30;
+    //oImg(5,5) = 242;
     //oImg(5,6) = 81;
     //oImg(5,7) = 226;
-    oImg(6,0) = 200;
-    oImg(6,1) = 150;
-    oImg(6,2) = 26;
-    oImg(6,3) = 68;
-    oImg(6,4) = 20;
+    //oImg(6,0) = 200;
+    //oImg(6,1) = 150;
+    //oImg(6,2) = 26;
+    //oImg(6,3) = 68;
+    //oImg(6,4) = 20;
     //oImg(6,6) = 244;
     //oImg(6,7) = 254;
-    oImg(7,2) = 116;
-    oImg(7,3) = 148;
-    oImg(7,4) = 10;
-    oImg(7,5) = 22;
+    //oImg(7,2) = 116;
+    //oImg(7,3) = 148;
+    //oImg(7,4) = 10;
+    //oImg(7,5) = 22;
     //oImg(7,6) = 148;
     //oImg(7,7) = 10;
-    oImg(7,0) = 4;
-    oImg(7,1) = 81;
-
+    //oImg(7,0) = 4;
+    //oImg(7,1) = 81;
+*/
     //GreyImage oPred = fixed_prediction(oImg);
 
     /// Comprimir archivo
     string compressCode{golombEncoding(oImg, atoi(argv[2]))};
-    //cout << "code1>" << compressCode << endl;
+    //cout << "" << compressCode << endl;
     copy_to_file("archivo_comprimido", "P5", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), transformData(compressCode));
 
     /// Descomprimir archivo
@@ -136,14 +136,6 @@ int main(int argc, char* argv[])
     /// Guardar en imagenes
     oImg.save("original.pgm");
     oDecompress.save("decompress.pgm");
-    /*for(int row = 0; row < oImg.getHeight() ; ++row )
-        for(int col = 0; col < oImg.getWidth() ; ++col )
-        {
-            cout << "Img : ( " << row << ", " << col << ") = " << (int)oImg(row,col) << endl;
-            cout << "Decompress : ( " << row << ", " << col << ") = " << (int)oDecompress(row,col) << endl;
-            cout << endl;
-        }
-    */
 
     exit(0);
 

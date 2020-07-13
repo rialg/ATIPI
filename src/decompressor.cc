@@ -38,20 +38,23 @@ GreyImage& decompress(const string& code, int height, int width, size_t N)
     /// Empezar el proceso de descompresión
     string sCode{code}, buffer = "";
     bool newPixel = true, startUna = true;
-    int row = 0, col = 0, m = 0, k = 0, rem = 0, quot = 0, count = 0;
+    int row = 0, col = 0, m = 0, k = 0, rem = 0, quot = 0;
 
     GreyImage oErrorTemp{height, width}, oPred{height, width};
 
     for(const auto& bit : sCode )
     {
+        /// Calcular m
         if(newPixel)
         {
 
-            /// Calcular m
             try
             {
 
                 m = getCodeOrder( PixelPos{row, col}, oTable, oErrorTemp);
+                k = ceil(log2((double) m));
+                buffer.clear();
+                buffer = "";
 
             } catch (const InvalidPixelPositionException& e) {
 
@@ -59,67 +62,60 @@ GreyImage& decompress(const string& code, int height, int width, size_t N)
                 break;
 
             }
-
-            k = ceil(log2((double) m));
-            buffer = string{bit};
             newPixel = false;
-            k--;
-        
-        } else {
+
+        }
+
+        if( m > 1 && k > 0)
+        {
 
             /// Procesar cod binario
-            if( k > 0 )
+            buffer += string{bit};
+            k--;
+
+        } else {
+
+            if(startUna)
             {
+                if( m > 1 )
+                {
+                    rem = (int) strtol( buffer.c_str(), NULL, 2);
+                } else
+                    rem = 0;
+                buffer.clear();
+                buffer = "";
+                startUna = false;
+            }
+
+            if ( bit  == '1' )
+            {
+                quot = (int) count( buffer.begin(), buffer.end(), '0');
+
+                /// Recuperar pixel
+                int16_t error = inverseRiceMapping(quot*m+rem);
+                update_fixed_prediction( *oRet, PixelPos{row, col}, &oPred);
+                oErrorTemp(row,col) = error;
+                (*oRet)(row, col) = error + oPred(row, col);
+
+                if( (col+1) % width == 0 )
+                {
+                    row++;
+                    col = 0;
+                }
+                else
+                    col++;
+
+                startUna = true;
+                newPixel = true;
+            } else {
 
                 buffer += string{bit};
-                k--;
-
-            } else { /// Procesar cod unario
-
-                if(startUna)
-                {
-
-                    rem = (int) strtol( buffer.c_str(), NULL, 2);
-                    buffer.clear();
-                    buffer = string{bit};
-                    startUna = false;
-
-                }
-
-                if ( bit  == '1' )
-                {
-
-                    quot = count;
-                    /// Recuperar pixel
-                    int16_t error = inverseRiceMapping(quot*m+rem);
-                    update_fixed_prediction( *oRet, PixelPos{row, col}, &oPred);
-
-                    oErrorTemp(row,col) = error;
-                    (*oRet)(row, col) = error + oPred(row, col);
-
-                    if( (col+1) % width == 0 )
-                    {
-                        row++;
-                        col = 0;
-                    }
-                    else
-                        col++;
-
-                    count = 0;
-                    startUna = true;
-                    newPixel = true;
-
-                } else {
-
-                    count++;
-
-                }
 
             }
 
         }
 
     }
-    return *oRet;
 
+    return *oRet;
 }

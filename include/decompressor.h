@@ -5,6 +5,7 @@
 #define ATIPI_INCLUDE_DECOMPRESSOR_H_
 
 #include <string>
+#include <algorithm>
 #include <cstdint>
 #include <cstdlib>
 #include "grey_image.h"
