@@ -5,12 +5,8 @@
 #include <string>
 #include <iostream>
 #include <filesystem>
-#include "grey_image.h"
-#include "med_predictor.h"
 #include "error_calculator.h"
 #include "context_sign_matrix.h"
-#include "local_context.h"
-#include "golomb_encoder.h"
 #include "decompressor.h"
 #include "file_handler.h"
 
@@ -34,25 +30,6 @@ static int** initialize_errors_matrix(int height, int width){
       return errors;
 }
 
-/**
- * @brief   Función local que transforma un string de caracteres binarios
- *          a un vector de valores booleanos
- * @param code [in] - string de caracteres binarios
- * @returns vector de valores booleanos
-*/
-static inline const vector<bool>& transformData( const string& code )
-{
-
-    // Test
-    vector<char> cBits(code.begin(), code.end());
-    vector<bool>* bBits = new vector<bool>();
-    for(const char& c: cBits)
-        bBits->push_back( c == '1');
-
-    return *bBits;
-
-}
-
 int main(int argc, char* argv[])
 {
     
@@ -71,9 +48,8 @@ int main(int argc, char* argv[])
         cout << "Comprimiendo "<< argv[1] << endl;
         GreyImage oImg( argv[1] );
 
-        string compressCode{golombEncoding(oImg, atoi(argv[2]))};
         string filename{fs::path(argv[1]).stem().string()};
-        copy_to_file( filename.c_str(), "P5", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), transformData(compressCode));
+        compress(oImg, filename.c_str(), "P5", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]));
 
     } else {
 

@@ -11,6 +11,8 @@
 #include <bitset>
 #include <tuple>
 #include "grey_image.h"
+#include "med_predictor.h"
+#include "golomb_encoder.h"
 
 using namespace std;
 
@@ -37,5 +39,16 @@ void copy_to_file(string filename, string type, int width, int height, int n, ve
  * @returns tupla con código y metadatos
 */
 const compressData& read_compressed(const char* filePath);
+
+/**
+ * @brief funcion que escribe bytes en archivo comprimido
+ * @param oImage [in] GreyImage - imagen a comprimir
+ * @param filename [in] string - nombre de archivo
+ * @param type [in] string - tipo P5 o P6
+ * @param width [in] int - image width
+ * @param height [in] int - image height
+ * @param N [in] int - context size
+*/
+void compress(const GreyImage& oImage, const string& filename, const string& type, int width, int height,  size_t N);
 
 #endif /// < ATIPI_INCLUDE_FILE_HANDLER_H_
