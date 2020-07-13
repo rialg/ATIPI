@@ -18,6 +18,10 @@
 using namespace std;
 namespace fs = std::__fs::filesystem;
 
+/// Código de estado
+const int ERROR_USAGE = -1;
+const int OK = -1;
+
 static int** initialize_errors_matrix(int height, int width){
     int** errors = new int*[height];
     for (int h = 0; h < height; h++){
@@ -30,6 +34,12 @@ static int** initialize_errors_matrix(int height, int width){
       return errors;
 }
 
+/**
+ * @brief   Función local que transforma un string de caracteres binarios
+ *          a un vector de valores booleanos
+ * @param code [in] - string de caracteres binarios
+ * @returns vector de valores booleanos
+*/
 static inline const vector<bool>& transformData( const string& code )
 {
 
@@ -50,7 +60,7 @@ int main(int argc, char* argv[])
     {
 
         cout << "USAGE: Compressor <image-path> <N> | -d <compressed-image-path>" << endl;
-        exit(-1);
+        exit(ERROR_USAGE);
 
     }
 
@@ -78,5 +88,5 @@ int main(int argc, char* argv[])
     }
     cout << "Operación terminada " << endl;
 
-    exit(0);
+    exit(OK);
 }

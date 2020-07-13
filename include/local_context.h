@@ -27,7 +27,7 @@ namespace std
     {
         std::size_t operator()(PixelPos const& pixel) const noexcept
         {
-            return pixel.second * 512 + pixel.first; // col * width + row
+            return pixel.first + pixel.second; /// mapped row + col
         }
     };
 };
@@ -76,6 +76,7 @@ class ContextTable : public ContextTableBase
 
     public:
         ContextTable();
+        ContextTable(int height, int width);
         ~ContextTable();
         /**
           * @brief   Sobrecarga del operador
@@ -84,9 +85,12 @@ class ContextTable : public ContextTableBase
             if( this->find(oPixel) == this->end() )
                 throw InvalidPixelPositionException();
             else
-                return ContextTableBase::operator[]( oPixel );
+                return ContextTableBase::operator[]( PixelPos{ oPixel.first * (height - (height-width)), oPixel.second } );
         };
 
+    private:
+        int height = 0;
+        int width = 0;
 };
 
 /**

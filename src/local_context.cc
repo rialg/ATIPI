@@ -11,6 +11,10 @@
 ContextTable::ContextTable()
 {};
 
+/// @brief Class constructor
+ContextTable::ContextTable(int height, int width):
+height{height},width{width}{};
+
 /// @brief Class destructor
 ContextTable::~ContextTable()
 {};
@@ -104,7 +108,7 @@ static vector<PixelPos>& applyMask(const PixelPos& oPosition, const ContextMask&
 const ContextTable& getLocalContext(const size_t N, const int width, const int height)
 {
 
-    ContextTable* oTable = new ContextTable();
+    ContextTable* oTable = new ContextTable(height, width);
     ContextMask oMask{ createPixelMask(N) };
 
     for(int row = 0; row < height; ++row)
