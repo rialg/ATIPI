@@ -4,7 +4,7 @@
 
 #include <string>
 #include <iostream>
-//#include <memory>
+#include <filesystem>
 #include "grey_image.h"
 #include "med_predictor.h"
 #include "error_calculator.h"
@@ -16,6 +16,7 @@
 
 /// Usar namespace de la biblioteca estándar
 using namespace std;
+namespace fs = std::__fs::filesystem;
 
 static int** initialize_errors_matrix(int height, int width){
     int** errors = new int*[height];
@@ -48,95 +49,34 @@ int main(int argc, char* argv[])
     if(argc < 3)
     {
 
-        cout << "USAGE: Compressor <image-path> <N>" << endl;
+        cout << "USAGE: Compressor <image-path> <N> | -d <compressed-image-path>" << endl;
         exit(-1);
 
     }
 
-    GreyImage oImg( argv[1] );
-/*
-    GreyImage oImg{4 , 6};
-    oImg(0,0) = 42;
-    oImg(0,1) = 84;
-    oImg(0,2) = 42;
-    oImg(0,3) = 84;
-    oImg(0,4) = 244;
-    oImg(0,5) = 254;
-    //oImg(0,6) = 244;
-    //oImg(0,7) = 254;
-    oImg(1,0) = 200;
-    oImg(1,1) = 150;
-    oImg(1,2) = 26;
-    oImg(1,3) = 68;
-    oImg(1,4) = 20;
-    oImg(1,5) = 25;
-    //oImg(1,6) = 150;
-    //oImg(1,7) = 26;
-    oImg(2,0) = 142;
-    oImg(2,1) = 184;
-    oImg(2,2) = 26;
-    oImg(2,3) = 138;
-    oImg(2,4) = 78;
-    oImg(2,5) = 78;
-    //oImg(2,6) = 138;
-    //oImg(2,7) = 78;
-    oImg(2,5) = 22;
-    oImg(3,0) = 2;
-    oImg(3,1) = 4;
-    oImg(3,2) = 126;
-    oImg(3,3) = 198;
-    oImg(3,4) = 219;
-    oImg(3,5) = 251;
-    //oImg(3,6) = 111;
-    //oImg(3,7) = 82;
-    //oImg(4,0) = 111;
-    //oImg(4,1) = 82;
-    //oImg(4,2) = 116;
-    //oImg(4,3) = 148;
-    //oImg(4,4) = 10;
-    //oImg(4,5) = 22;
-    //oImg(4,6) = 148;
-    //oImg(4,7) = 10;
-    //oImg(5,0) = 4;
-    //oImg(5,1) = 81;
-    //oImg(5,2) = 226;
-    //oImg(5,3) = 38;
-    //oImg(5,4) = 30;
-    //oImg(5,5) = 242;
-    //oImg(5,6) = 81;
-    //oImg(5,7) = 226;
-    //oImg(6,0) = 200;
-    //oImg(6,1) = 150;
-    //oImg(6,2) = 26;
-    //oImg(6,3) = 68;
-    //oImg(6,4) = 20;
-    //oImg(6,6) = 244;
-    //oImg(6,7) = 254;
-    //oImg(7,2) = 116;
-    //oImg(7,3) = 148;
-    //oImg(7,4) = 10;
-    //oImg(7,5) = 22;
-    //oImg(7,6) = 148;
-    //oImg(7,7) = 10;
-    //oImg(7,0) = 4;
-    //oImg(7,1) = 81;
-*/
-    //GreyImage oPred = fixed_prediction(oImg);
+    if( strncmp( argv[1], "-d", strlen("-d")) != 0 )
+    {
 
-    /// Comprimir archivo
-    string compressCode{golombEncoding(oImg, atoi(argv[2]))};
-    //cout << "" << compressCode << endl;
-    copy_to_file("archivo_comprimido", "P5", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), transformData(compressCode));
+        /// Comprimir archivo
+        cout << "Comprimiendo "<< argv[1] << endl;
+        GreyImage oImg( argv[1] );
 
-    /// Descomprimir archivo
-    compressData oCompressData{ read_compressed("archivo_comprimido.loco") };
-    //cout << "code2>" << get<0>(oCompressData) << endl;
-    GreyImage oDecompress = decompress( get<0>(oCompressData), get<1>(oCompressData), get<2>(oCompressData), get<3>(oCompressData));
+        string compressCode{golombEncoding(oImg, atoi(argv[2]))};
+        string filename{fs::path(argv[1]).stem().string()};
+        copy_to_file( filename.c_str(), "P5", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), transformData(compressCode));
 
-    /// Guardar en imagenes
-    oImg.save("original.pgm");
-    oDecompress.save("decompress.pgm");
+    } else {
+
+        /// Descomprimir archivo
+        cout << "Descomprimiendo "<< argv[2] << endl;
+        compressData oCompressData{ read_compressed(argv[2]) };
+        GreyImage oDecompress = decompress( get<0>(oCompressData), get<1>(oCompressData), get<2>(oCompressData), get<3>(oCompressData));
+
+        string filename{fs::path(argv[2]).stem().string()};
+        oDecompress.save(strcat( const_cast<char*>(filename.c_str()), ".pgm") );
+
+    }
+    cout << "Operación terminada " << endl;
 
     exit(0);
-
 }
