@@ -12,3 +12,6 @@ Proyecto de evaluación: Compresión/Decompresión de imágenes en colores
 
 ## Ejemplo de decompresión
 1. ```$ ./Compressor -d barbara.loco```
+
+## Documentación
+[archivos de Compressor](./docs/index.html)

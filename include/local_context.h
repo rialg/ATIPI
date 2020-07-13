@@ -76,6 +76,11 @@ class ContextTable : public ContextTableBase
 
     public:
         ContextTable();
+        /**
+            * @brief Class constructor
+            * @param height [in] - alto
+            * @param width [in] - ancho
+        */
         ContextTable(int height, int width);
         ~ContextTable();
         /**
@@ -89,15 +94,15 @@ class ContextTable : public ContextTableBase
         };
 
     private:
-        int height = 0;
-        int width = 0;
+        int height = 0; /// < alto
+        int width = 0;  /// < ancho
 };
 
 /**
  * @brief Función que calcula la tabla de contextos
- * @param [in] N - Tamaño del contexto
- * @param [in] width - Cantidad de columnas de pixeles de la imagen
- * @param [in] height - Cantidad de filas de pixeles de la imagen
+ * @param N [in] - Tamaño del contexto
+ * @param width [in] - Cantidad de columnas de pixeles de la imagen
+ * @param height [in] - Cantidad de filas de pixeles de la imagen
  * @returns ContextTable, o tabla con pares de desplazamientos
 */
 const ContextTable& getLocalContext(const size_t N, const int width, const int height);

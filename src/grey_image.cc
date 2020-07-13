@@ -54,7 +54,7 @@ GreyImage& GreyImage::operator=(const GreyImage& oImg)
 
 /**
  * @brief Constructor
- * @param [in] imageFile - ruta al archivo de la imagen
+ * @param imageFile [in] - ruta al archivo de la imagen
 */ 
 GreyImage::GreyImage(const char* imageFile)
 {
@@ -104,7 +104,7 @@ GreyImage::GreyImage(const char* imageFile)
 
 /**
  * @brief Método para guardar imageMat en un archivo PGM
- * @param [in] fileName - nombre del archivo donde se guarda la imagen
+ * @param fileName [in] - nombre del archivo donde se guarda la imagen
 */
 void GreyImage::save(const char* fileName) const
 {
@@ -139,7 +139,11 @@ GreyImage::~GreyImage()
     
 };
 
-/// @brief Operador de adición
+/**
+ * @brief Operador de adición
+ * @param oDer [in] - Operando derecho
+ * @returns Imagen actualizada
+*/
 GreyImage& GreyImage::operator+=( const GreyImage& oDer )
 {
 
@@ -156,7 +160,10 @@ GreyImage& GreyImage::operator+=( const GreyImage& oDer )
 
 }
 
-/// @brief Operador de substracción
+/** @brief Operador de substracción
+ * @param oDer [in] - Operando derecho
+ * @returns Imagen actualizada
+*/
 GreyImage& GreyImage::operator-=(const GreyImage& oDer)
 {
 
@@ -173,7 +180,12 @@ GreyImage& GreyImage::operator-=(const GreyImage& oDer)
 
 }
 
-/// @brief Operador de adición
+/** 
+ * @brief Operador de adición
+ * @param oIzq [in] - Operando derecho 
+ * @param oDer [in] - Operando derecho
+ * @returns Resultado de la suma
+*/
 GreyImage& operator+(const GreyImage& oIzq, const GreyImage& oDer)
 {
 
@@ -192,11 +204,16 @@ GreyImage& operator+(const GreyImage& oIzq, const GreyImage& oDer)
 
 }
 
-/// @brief Operador de substracción
+/** 
+ * @brief Operador de substracción
+ * @param oIzq [in] - Operando derecho 
+ * @param oDer [in] - Operando derecho
+ * @returns Resultado de la resta
+*/
 GreyImage& operator-(const GreyImage& oIzq, const GreyImage& oDer)
 {
 
-    /// Check dimensions
+    /// @brief Check dimensions
     if( oIzq.getHeight() != oDer.getHeight() ||
         oIzq.getWidth() != oDer.getWidth() )
         throw new InvalidDimensionsException();

@@ -52,17 +52,23 @@ class GreyImage
     private:
         int width = 0;                  /// < Ancho de la imagen
         int height = 0;                 /// < Alto de la imagen
-        int16_t* imageMat = nullptr;   /// < Matriz de pixeles
+        int16_t* imageMat = nullptr;    /// < Matriz de pixeles
 
 };
 
-/**
+/** 
  * @brief Operador de adición
+ * @param oIzq [in] - Operando derecho 
+ * @param oDer [in] - Operando derecho
+ * @returns Resultado de la suma
 */
 GreyImage& operator+(const GreyImage& oIzq, const GreyImage& oDer);
 
-/**
+/** 
  * @brief Operador de substracción
+ * @param oIzq [in] - Operando derecho 
+ * @param oDer [in] - Operando derecho
+ * @returns Resultado de la resta
 */
 GreyImage& operator-(const GreyImage& oIzq, const GreyImage& oDer);
 

@@ -11,7 +11,11 @@
 ContextTable::ContextTable()
 {};
 
-/// @brief Class constructor
+/**
+ * @brief Class constructor
+ * @param height [in] - alto
+ * @param width [in] - ancho
+*/
 ContextTable::ContextTable(int height, int width):
 height{height},width{width}{};
 
@@ -21,7 +25,7 @@ ContextTable::~ContextTable()
 
 /**
  * @brief Función local que determina la mascara de los pixeles que pertenecen al contexto
- * @param [in] N - Tamaño del contexto
+ * @param N [in] - Tamaño del contexto
  * @returns oMask, lista de pixeles en la mascara del contexto local
 */
 static ContextMask& createPixelMask(const size_t N)
@@ -70,10 +74,10 @@ static ContextMask& createPixelMask(const size_t N)
 
 /**
  * @brief Función local para aplicar la mascara del contexto local a cada uno de los pixeles
- * @param [in] oPosition - Ubicación del pixel (x)
- * @param [in] oMask - Mascara del contexto
- * @param [in] width - Cantidad de columnas de pixeles de la imagen
- * @param [in] height - Cantidad de filas de pixeles de la imagen
+ * @param oPosition [in] - Ubicación del pixel (x)
+ * @param oMask [in] - Mascara del contexto
+ * @param width [in] - Cantidad de columnas de pixeles de la imagen
+ * @param height [in] - Cantidad de filas de pixeles de la imagen
  * @returns oRet, lista de pixeles en el contexto local de oPosition
 */
 static vector<PixelPos>& applyMask(const PixelPos& oPosition, const ContextMask& oMask, const int width, const int height)
@@ -100,9 +104,9 @@ static vector<PixelPos>& applyMask(const PixelPos& oPosition, const ContextMask&
 
 /**
  * @brief Función que calcula la tabla de contextos
- * @param [in] N - Tamaño del contexto
- * @param [in] width - Cantidad de columnas de pixeles de la imagen
- * @param [in] height - Cantidad de filas de pixeles de la imagen
+ * @param N [in] - Tamaño del contexto
+ * @param width [in] - Cantidad de columnas de pixeles de la imagen
+ * @param height [in] - Cantidad de filas de pixeles de la imagen
  * @returns oTable, o tabla con pares de desplazamientos
 */
 const ContextTable& getLocalContext(const size_t N, const int width, const int height)

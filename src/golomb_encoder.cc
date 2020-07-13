@@ -7,9 +7,9 @@
 
 /**
  * @brief Orden m=2^k del código de Golomb
- * @param [in] oPixel - Posición del pixel
- * @param [in] oTable - Tabla de contextos locales
- * @param [in] oErrorMatrix - Matrix con errores de predicción
+ * @param oPixel [in] - Posición del pixel
+ * @param oTable [in] - Tabla de contextos locales
+ * @param oErrorMatrix [in] - Matrix con errores de predicción
  * @returns m - Orden del código de Golomb para el pixel
 */
 int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, const GreyImage& oErrorMatrix )
@@ -52,9 +52,9 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, const GreyImage& 
 
 /**
  * @brief Orden m=2^k del código de Golomb
- * @param [in] oPixel - Posición del pixel
- * @param [in] oTable - Tabla de contextos locales
- * @param [in] errorMatrix - Matrix con errores de predicción
+ * @param oPixel [in] - Posición del pixel
+ * @param oTable [in] - Tabla de contextos locales
+ * @param errorMatrix [in] - Matrix con errores de predicción
  * @returns m - Orden del código de Golomb para el pixel
 */
 int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, int** errorMatrix )
@@ -97,9 +97,9 @@ int getCodeOrder(const PixelPos& oPixel, ContextTable& oTable, int** errorMatrix
 
 /**
  * @brief Mapeo de Rice
- * @param [in] height - Cantidad de filas
- * @param [in] width - Cantidad de columnas
- * @param [in] errorMatrix - Matrix con errores de predicción
+ * @param height [in] - Cantidad de filas
+ * @param width [in] - Cantidad de columnas
+ * @param errorMatrix [in] - Matrix con errores de predicción
  * @returns mappings - Mapeo
 */
 GreyImage& RiceMapping( int height, int width, int** errorMatrix )
@@ -124,7 +124,7 @@ GreyImage& RiceMapping( int height, int width, int** errorMatrix )
 
 /**
  * @brief Mapeo de Rice
- * @param [in] oErrorMatrix - Matrix con errores de predicción
+ * @param oErrorMatrix [in] - Matrix con errores de predicción
  * @returns oMappings - Mapeo
 */
 GreyImage& RiceMapping( const GreyImage& oErrorMatrix )
@@ -207,8 +207,8 @@ const string& golombEncoding(const GreyImage& oImage, size_t N)
 
 /**
  * @brief Codificacion de Golomb
- * @param [in] K - K value
- * @param [in] error - error value (mapped by rice)
+ * @param K [in] - K value
+ * @param error [in] - error value (mapped by rice)
  * @returns codification bitset
 */
 vector<bool> GolombCodification( int m, int error )
