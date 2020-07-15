@@ -12,7 +12,7 @@
 
 /// Usar namespace de la biblioteca estándar
 using namespace std;
-namespace fs = std::__fs::filesystem;
+namespace fs = std::filesystem;
 
 /// Código de estado
 const int ERROR_USAGE = -1;
