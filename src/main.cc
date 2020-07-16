@@ -32,7 +32,7 @@ static int** initialize_errors_matrix(int height, int width){
 
 int main(int argc, char* argv[])
 {
-    
+
     if(argc < 3)
     {
 
@@ -55,11 +55,7 @@ int main(int argc, char* argv[])
 
         /// Descomprimir archivo
         cout << "Descomprimiendo "<< argv[2] << endl;
-        compressData oCompressData{ read_compressed(argv[2]) };
-        GreyImage oDecompress = decompress( get<0>(oCompressData), get<1>(oCompressData), get<2>(oCompressData), get<3>(oCompressData));
-
-        string filename{fs::path(argv[2]).stem().string()};
-        oDecompress.save(strcat( const_cast<char*>(filename.c_str()), ".pgm") );
+        decompress_from_file(argv[2]);
 
     }
     cout << "Operación terminada " << endl;

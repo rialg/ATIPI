@@ -162,7 +162,7 @@ void copy_to_file(string filename, string type, int width, int height,  int n, v
 }
 
 /**
- * @brief   Leer el stream de bytes del archivo comprimido y
+ * @brief   Leer el stream de bytes del archivo comprimido
  *          y devolver el código (y metadatos) en una tupla
  * @param filePath [in] - Ruta (absoluta) al fichero comprimido
  * @returns tupla con código y metadatos
@@ -203,5 +203,63 @@ const compressData& read_compressed(const char* filePath)
 
     compressData* oCompressData = new compressData(*code, height, width, N);
     return *oCompressData;
+
+}
+
+/**
+ * @brief   Leer el stream de bytes del archivo comprimido
+ *          y escribir imagen descomprimida
+ * @param filePath [in] - Ruta (absoluta) al fichero comprimido
+*/
+void decompress_from_file(const char* filePath)
+{
+
+    string code("");
+
+    /// Read file
+    ifstream oCompressedImage(filePath, ios::binary);
+
+    /// Get decompressed image file size
+    string line;
+    getline(oCompressedImage, line);
+
+    if( line.compare("P5") != 0 && line.compare("P6") != 0 ) /// Check format
+        throw InvalidImageFormatException();
+
+    line.clear();
+    getline(oCompressedImage, line);
+    int width = stoi(line.substr(0, line.find(" "))); // => To uncomment latter
+    int height = stoi(line.substr(line.find(" "), line.length() )); // => To uncomment latter
+
+    line.clear();
+    getline(oCompressedImage, line);
+    int N = stoi(line.substr(0, line.find(" ")));
+
+    /// Obtener los contextos locales
+    ContextTable oTable{getLocalContext(N, width, height)};
+
+    /// Empezar el proceso de descompresión
+    string buffer = "";
+    state oState(true, true, 0, 0, 0, 0, 0, 0);
+
+    GreyImage   oErrorTemp{height, width},      /// < Error de predicción
+                oPred{height, width},           /// < Predicción MED
+                oDecompressed{height, width};   /// < Imagen descomprimida
+
+    char c = oCompressedImage.get();
+    while( !oCompressedImage.eof() )
+    {
+
+        for( int i = 7; i >= 0; --i )
+            code += string{ (c & ( 1 << i )) ? "1" : "0" };
+
+        stateless_decompress( code, oTable, height, width, N, oErrorTemp, oPred, oState, buffer, oDecompressed);
+        code.clear();
+
+        oCompressedImage.get(c);
+    }
+    string filename{fs::path(filePath).stem().string()};
+    ///@brief escribir imagen
+    oDecompressed.save(strcat( const_cast<char*>(filename.c_str()), ".pgm") );
 
 }
