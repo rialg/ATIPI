@@ -79,12 +79,13 @@ GreyImage::GreyImage(const char* imageFile)
     imageMat = new int16_t[width*height];
     
     getline(oImageStream, line); /// < Descartar max_val
-    getline(oImageStream, line); /// < Tomar bytes de la imagen
-    
+
+    /// < Leer datos byte a byte
+    char c = oImageStream.get();
     int row = 0, col = 0;
-    for(char c : line)
+    while( !oImageStream.eof() )
     {
-     
+
         imageMat[ row * (height - (height-width)) + col ] = (int16_t) c;
         col++;
 
@@ -96,6 +97,7 @@ GreyImage::GreyImage(const char* imageFile)
         if(row >= height)
             break;
 
+        oImageStream.get(c);
     }
     
     oImageStream.close();
