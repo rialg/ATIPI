@@ -66,6 +66,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">decompressor.h File Reference</div>  </div>
@@ -75,6 +76,7 @@ $(function() {
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;cstdlib&gt;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
 <code>#include &quot;<a class="el" href="grey__image_8h_source.html">grey_image.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="local__context_8h_source.html">local_context.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="med__predictor_8h_source.html">med_predictor.h</a>&quot;</code><br />
@@ -82,11 +84,21 @@ $(function() {
 </div>
 <p><a href="decompressor_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ae32fb0cff1c2fe656044d02a78edfd4d"><td class="memItemLeft" align="right" valign="top"><a id="ae32fb0cff1c2fe656044d02a78edfd4d"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="decompressor_8h.html#ae32fb0cff1c2fe656044d02a78edfd4d">state</a> = tuple&lt; bool, bool, int, int, int, int, int, int &gt;</td></tr>
+<tr class="memdesc:ae32fb0cff1c2fe656044d02a78edfd4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estado de las variables de decompresión. <br /></td></tr>
+<tr class="separator:ae32fb0cff1c2fe656044d02a78edfd4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a28a02dbd5a69e05c698d5a64d27609fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_grey_image.html">GreyImage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="decompressor_8h.html#a28a02dbd5a69e05c698d5a64d27609fb">decompress</a> (const string &amp;code, int height, int width, size_t N)</td></tr>
 <tr class="memdesc:a28a02dbd5a69e05c698d5a64d27609fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Función que descomprime la imagen (code)  <a href="decompressor_8h.html#a28a02dbd5a69e05c698d5a64d27609fb">More...</a><br /></td></tr>
 <tr class="separator:a28a02dbd5a69e05c698d5a64d27609fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87721982babe41ded58c44e7248ab315"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="decompressor_8h.html#a87721982babe41ded58c44e7248ab315">stateless_decompress</a> (const string &amp;code, <a class="el" href="class_context_table.html">ContextTable</a> &amp;oTable, const int height, const int width, const size_t N, <a class="el" href="class_grey_image.html">GreyImage</a> &amp;oErrorTemp, <a class="el" href="class_grey_image.html">GreyImage</a> &amp;oPred, <a class="el" href="decompressor_8h.html#ae32fb0cff1c2fe656044d02a78edfd4d">state</a> &amp;oState, string &amp;buffer, <a class="el" href="class_grey_image.html">GreyImage</a> &amp;oDecompressed)</td></tr>
+<tr class="memdesc:a87721982babe41ded58c44e7248ab315"><td class="mdescLeft">&#160;</td><td class="mdescRight">Función que descomprime code en oDecompressed.  <a href="decompressor_8h.html#a87721982babe41ded58c44e7248ab315">More...</a><br /></td></tr>
+<tr class="separator:a87721982babe41ded58c44e7248ab315"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>API de descompresión de imágenes </p>
@@ -147,6 +159,107 @@ Functions</h2></td></tr>
 <p>Nos encontramos con el padding</p>
 <p>Procesar cod binario</p>
 <p>Recuperar pixel</p>
+
+</div>
+</div>
+<a id="a87721982babe41ded58c44e7248ab315"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87721982babe41ded58c44e7248ab315">&#9670;&nbsp;</a></span>stateless_decompress()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void stateless_decompress </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_context_table.html">ContextTable</a> &amp;&#160;</td>
+          <td class="paramname"><em>oTable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>N</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_grey_image.html">GreyImage</a> &amp;&#160;</td>
+          <td class="paramname"><em>oErrorTemp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_grey_image.html">GreyImage</a> &amp;&#160;</td>
+          <td class="paramname"><em>oPred</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="decompressor_8h.html#ae32fb0cff1c2fe656044d02a78edfd4d">state</a> &amp;&#160;</td>
+          <td class="paramname"><em>oState</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string &amp;&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_grey_image.html">GreyImage</a> &amp;&#160;</td>
+          <td class="paramname"><em>oDecompressed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Función que descomprime code en oDecompressed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">code</td><td>[in] - Parte del código de la imagen comprimida </td></tr>
+    <tr><td class="paramname">oTable</td><td>[in] - Contextos locales </td></tr>
+    <tr><td class="paramname">height</td><td>[in] - Cantidad de filas </td></tr>
+    <tr><td class="paramname">width</td><td>[in] - Cantidad de columnas </td></tr>
+    <tr><td class="paramname">N</td><td>[in] - Tamaño de los contextos </td></tr>
+    <tr><td class="paramname">oErrorTemp</td><td>[out] - Errores de predicción de la imagen </td></tr>
+    <tr><td class="paramname">oPred</td><td>[out] - Predicción med de los valores de la imagen </td></tr>
+    <tr><td class="paramname">oState</td><td>[out] - Actualización del estado de decompresión </td></tr>
+    <tr><td class="paramname">buffer</td><td>[out] - Bits remanentes de la última ejecución </td></tr>
+    <tr><td class="paramname">oDecompressed</td><td>[out] - Imagen de salida (actualizada en cada invocación del procedimiento) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Actualización de la decompresión </dd></dl>
+<p>Empezar el proceso de descompresión</p>
+<p>Calcular m</p>
+<p>Nos encontramos con el padding</p>
+<p>Procesar cod binario</p>
+<p>Recuperar pixel</p>
+<p>Nos encontramos con el padding</p>
+<p>actualización del estado</p>
 
 </div>
 </div>

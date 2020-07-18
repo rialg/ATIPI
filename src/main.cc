@@ -16,7 +16,7 @@ namespace fs = std::filesystem;
 
 /// Código de estado
 const int ERROR_USAGE = -1;
-const int OK = -1;
+const int OK = 0;
 
 static int** initialize_errors_matrix(int height, int width){
     int** errors = new int*[height];
