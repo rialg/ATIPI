@@ -46,16 +46,48 @@ int main(int argc, char* argv[])
 
         /// Comprimir archivo
         cout << "Comprimiendo "<< argv[1] << endl;
-        GreyImage oImg( argv[1] );
 
         string filename{fs::path(argv[1]).stem().string()};
-        compress(oImg, filename.c_str(), "P5", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]));
+        ifstream oImageStream(argv[1], ios::binary);
+        string line;
+
+        /// Validar el formato del archivo
+        getline(oImageStream, line);
+        oImageStream.close();
+        if( line.find( "P5" ) != string::npos )
+        {
+
+            GreyImage oImg( argv[1] );
+            compress(oImg, filename.c_str(), "P5", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), RED);
+
+        } else {
+
+            ColourImage oImg( argv[1] );
+            compress(oImg.getRedImage(), filename.c_str(), "P6", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), RED);
+            compress(oImg.getGreenImage(), filename.c_str(), "P6", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), GREEN);
+            compress(oImg.getBlueImage(), filename.c_str(), "P6", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), BLUE);
+
+        }
 
     } else {
 
         /// Descomprimir archivo
         cout << "Descomprimiendo "<< argv[2] << endl;
-        decompress_from_file(argv[2]);
+
+        ifstream oImageStream(argv[2], ios::binary);
+        string line;
+
+        /// Validar el formato del archivo
+        getline(oImageStream, line);
+        oImageStream.close();
+        if( line.find( "P5" ) != string::npos )
+        {
+
+            decompress_from_file(argv[2]);
+
+        } else {
+            /// TODO
+        }
 
     }
     cout << "Operación terminada " << endl;

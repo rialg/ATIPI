@@ -12,6 +12,7 @@
 #include <tuple>
 #include <filesystem>
 #include "grey_image.h"
+#include "colour_image.h"
 #include "med_predictor.h"
 #include "golomb_encoder.h"
 #include "decompressor.h"
@@ -51,9 +52,9 @@ const compressData& read_compressed(const char* filePath);
  * @param width [in] int - image width
  * @param height [in] int - image height
  * @param N [in] int - context size
+ * @param oRGB [in] Colour - color a comprimir (aplica solamente a las imagenes a color)
 */
-void compress(const GreyImage& oImage, const string& filename, const string& type, int width, int height,  size_t N);
-
+void compress(const GreyImage& oImage, const string& filename, const string& type, int width, int height,  size_t N, Colour oRGB);
 
 /**
  * @brief   Leer el stream de bytes del archivo comprimido

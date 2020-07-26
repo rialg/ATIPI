@@ -8,16 +8,25 @@
  * @param width [in] int - image width
  * @param height [in] int - image height
  * @param N [in] int - context size
+ * @param oRGB [in] Colour - color a comprimir (aplica solamente a las imagenes a color)
 */
-void compress(const GreyImage& oImage, const string& filename, const string& type, int width, int height,  size_t N)
+void compress(const GreyImage& oImage, const string& filename, const string& type, int width, int height,  size_t N, Colour oRGB)
 {
 
     /// 0. Abrir archivo a escribir
     ofstream pgmFile;
-    pgmFile.open(filename + ".loco");
-    pgmFile << type << endl;
-    pgmFile << width << " " << height << endl;
-    pgmFile << N << endl;
+
+    if( type.find( "P5" ) != string::npos || oRGB == RED )
+    {
+
+        pgmFile.open(filename + ".loco");
+        pgmFile << type << endl;
+        pgmFile << width << " " << height << endl;
+        pgmFile << N << endl;
+
+    }
+    else
+        pgmFile.open(filename + ".loco", std::ios_base::app);
 
     /// 1. Apply MED
     GreyImage oPrediction = fixed_prediction(oImage);
