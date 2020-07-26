@@ -87,7 +87,7 @@ class ContextTable : public ContextTableBase
           * @brief   Sobrecarga del operador
         */
         vector<PixelPos>& operator[]( const PixelPos& oPixel ){
-            if( this->find(oPixel) == this->end() )
+            if( this->find(PixelPos{ oPixel.first * (height - (height-width)), oPixel.second }) == this->end() )
                 throw InvalidPixelPositionException();
             else
                 return ContextTableBase::operator[]( PixelPos{ oPixel.first * (height - (height-width)), oPixel.second } );

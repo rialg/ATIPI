@@ -78,12 +78,11 @@ static ContextMask& createPixelMask(const size_t N)
  * @param oMask [in] - Mascara del contexto
  * @param width [in] - Cantidad de columnas de pixeles de la imagen
  * @param height [in] - Cantidad de filas de pixeles de la imagen
+ * @param oRet [out] - Vector con pixeles del contexto
  * @returns oRet, lista de pixeles en el contexto local de oPosition
 */
-static vector<PixelPos>& applyMask(const PixelPos& oPosition, const ContextMask& oMask, const int width, const int height)
+static void applyMask(const PixelPos& oPosition, const ContextMask& oMask, const int width, const int height, vector<PixelPos>& oRet)
 {
-
-    vector<PixelPos>* oRet = new vector<PixelPos>();
     /// Tomar cada pixel de la mascara
     for(const auto& dot : oMask )
     {
@@ -93,13 +92,11 @@ static vector<PixelPos>& applyMask(const PixelPos& oPosition, const ContextMask&
             oCandidate.first < height   &&
             oCandidate.second >=0       &&
             oCandidate.second < width   )
-            oRet->push_back(oCandidate);
+            oRet.push_back(oCandidate);
         else
             continue;
 
     }
-    return *oRet;
-
 }
 
 /**
@@ -120,15 +117,17 @@ const ContextTable& getLocalContext(const size_t N, const int width, const int h
         for(int col = 0; col < width; ++col)
         {
 
-            bool find_all = false;
-            int distance = 0, total_found = 0;
-            PixelPos oPosition{ row, col };
-            if( oTable->find(oPosition) == oTable->end() )
-                oTable->insert({ oPosition, applyMask(oPosition, oMask, width, height) });
+            PixelPos oMappedPosition{ row * (height - (height-width)), col };
+            if( oTable->find(oMappedPosition) == oTable->end() )
+            {
+                vector<PixelPos> oNeighbours{};
+                applyMask(PixelPos{row, col}, oMask, width, height, oNeighbours);
+                oTable->insert(make_pair(oMappedPosition, oNeighbours));
+            }
 
         }
     }
-    
+
     return (*oTable);
 
 }
