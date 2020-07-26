@@ -2,6 +2,7 @@
 include_directories(${Compressor_SOURCE_DIR}/include)
 
 add_library(GreyImage grey_image.cc)
+add_library(ColourImage colour_image.cc)
 add_library(MedPredictor med_predictor.cc)
 add_library(ErrorCalculator error_calculator.cc)
 add_library(ContextSignMatrix context_sign_matrix.cc)
@@ -21,12 +22,15 @@ target_link_libraries(FileHandler PUBLIC GreyImage)
 target_link_libraries(GolombEncoder PUBLIC GreyImage)
 target_link_libraries(GolombEncoder PUBLIC LocalContext)
 
+target_link_libraries(ColourImage PUBLIC GreyImage)
+
 target_link_libraries(Decompressor PUBLIC GreyImage)
 target_link_libraries(Decompressor PUBLIC MedPredictor)
 target_link_libraries(Decompressor PUBLIC LocalContext)
 target_link_libraries(Decompressor PUBLIC GolombEncoder)
 
 target_link_libraries(Compressor PUBLIC GreyImage)
+target_link_libraries(Compressor PUBLIC ColourImage)
 target_link_libraries(Compressor PUBLIC MedPredictor)
 target_link_libraries(Compressor PUBLIC ErrorCalculator)
 target_link_libraries(Compressor PUBLIC ContextSignMatrix)
