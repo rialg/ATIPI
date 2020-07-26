@@ -9,9 +9,8 @@
 
 #include "grey_image.h"
 
-const int RED = 0;
-const int GREEN = 1;
-const int BLUE = 2;
+/// @brief Enumeracion de colores
+enum Colour {RED = 0, GREEN = 1, BLUE = 2};
 
 /**
  * @class ColourImage
