@@ -4,15 +4,21 @@
 
 #include <string>
 #include <iostream>
-//#include <memory>
-#include "grey_image.h"
-#include "med_predictor.h"
+#include <filesystem>
 #include "error_calculator.h"
+#include "context_sign_matrix.h"
+#include "decompressor.h"
+#include "file_handler.h"
 
 /// Usar namespace de la biblioteca estándar
 using namespace std;
+namespace fs = std::filesystem;
 
-int** initialize_errors_matrix(int height, int width){
+/// Código de estado
+const int ERROR_USAGE = -1;
+const int OK = 0;
+
+static int** initialize_errors_matrix(int height, int width){
     int** errors = new int*[height];
     for (int h = 0; h < height; h++){
             errors[h] = new int[width];
@@ -24,17 +30,35 @@ int** initialize_errors_matrix(int height, int width){
       return errors;
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-    GreyImage oIMG("test/Imagenes-LOCO-PGM+PPM/barbara.pgm");
-    GreyImage oPrediction = fixed_prediction(oIMG);
-    oIMG.save("original_img.pgm");
-    oPrediction.save("med.pgm");
 
-    int** errors = initialize_errors_matrix(oIMG.getHeight(),oIMG.getWidth());
-    calculate_errors(oIMG, oPrediction, errors);
-    printf("error on (row,col) (15,15) %i", errors[15][15]);
-    cout << "\ncontextMat height: " << sizeof(errors) << " and contextMat width: " << sizeof(errors[0]);
+    if(argc < 3)
+    {
 
-    exit(0);
+        cout << "USAGE: Compressor <image-path> <N> | -d <compressed-image-path>" << endl;
+        exit(ERROR_USAGE);
+
+    }
+
+    if( strncmp( argv[1], "-d", strlen("-d")) != 0 )
+    {
+
+        /// Comprimir archivo
+        cout << "Comprimiendo "<< argv[1] << endl;
+        GreyImage oImg( argv[1] );
+
+        string filename{fs::path(argv[1]).stem().string()};
+        compress(oImg, filename.c_str(), "P5", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]));
+
+    } else {
+
+        /// Descomprimir archivo
+        cout << "Descomprimiendo "<< argv[2] << endl;
+        decompress_from_file(argv[2]);
+
+    }
+    cout << "Operación terminada " << endl;
+
+    exit(OK);
 }

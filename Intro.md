@@ -21,6 +21,7 @@ Dividimos en peque;ias partes
     K = techo( log2( A/N ) )  
         - A: suma acumulada de magnitud de errores (E)
         - N: numero total de pixeles en los en los alrededores
+
 1.6 Rice Mapping
     M(E) = 2(E) - u(E)
         u(x) = {

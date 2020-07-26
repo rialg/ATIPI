@@ -24,20 +24,24 @@ class GreyImage
 
     public:
         GreyImage();                                /// < Constructor por defecto
-        GreyImage(int width, int height);           /// < Constructor
+        GreyImage(int height, int width);           /// < Constructor
         GreyImage(const GreyImage& oImg);           /// < Copy Constructor
         GreyImage& operator=(const GreyImage& oImg);/// < Copy Assigment
         GreyImage(const char* imageFile);           /// < Constructor
         ~GreyImage();                               /// < Destructor
 
         ///@brief Método de acceso
-        uint8_t& operator()(size_t row, size_t col) { return imageMat[ row*width + col ]; };
+        int16_t& operator()(size_t row, size_t col) { return imageMat[ row * ( height - (height-width) ) + col ]; };
         ///@brief Método de acceso sin modificar valor
-        const uint8_t& operator()(size_t row, size_t col) const { return imageMat[ row*width + col ]; };
+        const int16_t operator()(size_t row, size_t col) const { return imageMat[ row * ( height - (height-width) ) + col ]; };
         ///@brief Método de acceso sin modificar valor
-        const uint8_t& operator[](size_t position) const { return imageMat[ position ]; };
+        const int16_t operator[](size_t position) const { return imageMat[ position ]; };
+        /// @brief Operador de adición
+        GreyImage& operator+=(const GreyImage& oDer);
+        /// @brief Operador de substracción
+        GreyImage& operator-=(const GreyImage& oDer);
         ///@brief Método para guardar imageMat en un archivo PGM
-        void save(const char* fileName);
+        void save(const char* fileName) const;
         ///@brief Accessor
         const int getWidth() const { return width; };
         ///@brief Accessor
@@ -48,9 +52,25 @@ class GreyImage
     private:
         int width = 0;                  /// < Ancho de la imagen
         int height = 0;                 /// < Alto de la imagen
-        uint8_t* imageMat = nullptr;   /// < Matriz de pixeles
+        int16_t* imageMat = nullptr;    /// < Matriz de pixeles
 
 };
+
+/** 
+ * @brief Operador de adición
+ * @param oIzq [in] - Operando derecho 
+ * @param oDer [in] - Operando derecho
+ * @returns Resultado de la suma
+*/
+GreyImage& operator+(const GreyImage& oIzq, const GreyImage& oDer);
+
+/** 
+ * @brief Operador de substracción
+ * @param oIzq [in] - Operando derecho 
+ * @param oDer [in] - Operando derecho
+ * @returns Resultado de la resta
+*/
+GreyImage& operator-(const GreyImage& oIzq, const GreyImage& oDer);
 
 /**
  * @class InvalidImageFormatException
@@ -68,6 +88,27 @@ class InvalidImageFormatException : public exception
     {
 
         return "El archivo no tiene el formato raw PGM";
+
+    };
+
+};
+
+/**
+ * @class InvalidDimensionsException
+ * @brief   Excepción usada para indicar que se opera con imágenes de
+ *          diferente tamaño
+*/
+class InvalidDimensionsException : public exception
+{
+
+    /**
+     * @brief Explicación del error
+     * @returns Texto explicativo
+    */
+    const char* what() const throw ()
+    {
+
+        return "Se esta operando con imagenes de diferentes dimensiones";
 
     };
 

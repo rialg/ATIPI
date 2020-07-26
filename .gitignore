@@ -40,3 +40,4 @@ build/*
 # Executables & outputs
 Compressor
 *.pgm
+*.loco

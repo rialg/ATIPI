@@ -12,13 +12,13 @@ GreyImage::GreyImage(){};
 
 /**
  * brief Constructor
- * @param [in] width - ancho de la imagen
- * @param [in] height - alto de la imagen
+ * @param width [in] - ancho de la imagen
+ * @param height [in] - alto de la imagen
 */
-GreyImage::GreyImage(int width, int height):
+GreyImage::GreyImage(int height, int width):
+height{height},
 width{width}, 
-height{height}, 
-imageMat{new uint8_t[width*height]}
+imageMat{new int16_t[width*height]}
 {
     /// Crear imagen oscura
     for( int i = 0; i < width*height; ++i )
@@ -30,7 +30,7 @@ imageMat{new uint8_t[width*height]}
 GreyImage::GreyImage(const GreyImage& oImg):
 width{oImg.getWidth()}, 
 height{oImg.getHeight()}, 
-imageMat{new uint8_t[oImg.getWidth()*oImg.getHeight()]}
+imageMat{new int16_t[oImg.getWidth()*oImg.getHeight()]}
 {
 
     for( int i = 0; i < width*height; ++i )
@@ -42,13 +42,19 @@ imageMat{new uint8_t[oImg.getWidth()*oImg.getHeight()]}
 GreyImage& GreyImage::operator=(const GreyImage& oImg)
 {
 
-    return GreyImage(oImg);
+    if(&oImg == this)
+        return *this;
+
+    for( int i = 0; i < width*height; ++i )
+        this->imageMat[i] = oImg[i];
+
+    return *this;
 
 };
 
 /**
  * @brief Constructor
- * @param [in] imageFile - ruta al archivo de la imagen
+ * @param imageFile [in] - ruta al archivo de la imagen
 */ 
 GreyImage::GreyImage(const char* imageFile)
 {
@@ -70,16 +76,17 @@ GreyImage::GreyImage(const char* imageFile)
     height = stoi(line.substr(line.find(" "), line.length() ));
     
     /// Crear arreglo de la imagen
-    imageMat = new uint8_t[width*height];
+    imageMat = new int16_t[width*height];
     
     getline(oImageStream, line); /// < Descartar max_val
-    getline(oImageStream, line); /// < Tomar bytes de la imagen
-    
+
+    /// < Leer datos byte a byte
+    char c = oImageStream.get();
     int row = 0, col = 0;
-    for(char c : line)
+    while( !oImageStream.eof() )
     {
-     
-        imageMat[row*height+col] = (uint8_t) c;
+
+        imageMat[ row * (height - (height-width)) + col ] = (int16_t) c;
         col++;
 
         if ( col % width == 0 )
@@ -90,6 +97,7 @@ GreyImage::GreyImage(const char* imageFile)
         if(row >= height)
             break;
 
+        oImageStream.get(c);
     }
     
     oImageStream.close();
@@ -98,9 +106,9 @@ GreyImage::GreyImage(const char* imageFile)
 
 /**
  * @brief Método para guardar imageMat en un archivo PGM
- * @param [in] fileName - nombre del archivo donde se guarda la imagen
+ * @param fileName [in] - nombre del archivo donde se guarda la imagen
 */
-void GreyImage::save(const char* fileName)
+void GreyImage::save(const char* fileName) const
 {
 
     /// Abrir el archivo
@@ -115,7 +123,7 @@ void GreyImage::save(const char* fileName)
         for( int col=0; col < width; ++col)
         {
 
-            fOut << (char) imageMat[row*height+col];
+            fOut << (char) imageMat[ row * (height - (height-width)) + col ];
 
         }
 
@@ -132,3 +140,92 @@ GreyImage::~GreyImage()
         delete[] imageMat;
     
 };
+
+/**
+ * @brief Operador de adición
+ * @param oDer [in] - Operando derecho
+ * @returns Imagen actualizada
+*/
+GreyImage& GreyImage::operator+=( const GreyImage& oDer )
+{
+
+    /// Check dimensions
+    if( this->getHeight() != oDer.getHeight() ||
+        this->getWidth() != oDer.getWidth() )
+        throw new InvalidDimensionsException();
+
+    for(int row = 0; row < this->getHeight(); ++row )
+        for(int col = 0; col < this->getWidth(); ++col )
+            (*this)(row, col) += oDer(row, col);
+
+    return *this;
+
+}
+
+/** @brief Operador de substracción
+ * @param oDer [in] - Operando derecho
+ * @returns Imagen actualizada
+*/
+GreyImage& GreyImage::operator-=(const GreyImage& oDer)
+{
+
+    /// Check dimensions
+    if( this->getHeight() != oDer.getHeight() ||
+        this->getWidth() != oDer.getWidth() )
+        throw new InvalidDimensionsException();
+
+    for(int row = 0; row < this->getHeight(); ++row )
+        for(int col = 0; col < this->getWidth(); ++col )
+            (*this)(row, col) -= oDer(row, col);
+
+    return *this;
+
+}
+
+/** 
+ * @brief Operador de adición
+ * @param oIzq [in] - Operando derecho 
+ * @param oDer [in] - Operando derecho
+ * @returns Resultado de la suma
+*/
+GreyImage& operator+(const GreyImage& oIzq, const GreyImage& oDer)
+{
+
+    /// Check dimensions
+    if( oIzq.getHeight() != oDer.getHeight() ||
+        oIzq.getWidth() != oDer.getWidth() )
+        throw new InvalidDimensionsException();
+
+    GreyImage* oRet = new GreyImage(oIzq.getHeight(), oIzq.getWidth());
+
+    for(int row = 0; row < oIzq.getHeight(); ++row )
+        for(int col = 0; col < oIzq.getWidth(); ++col )
+            (*oRet)(row, col) = oIzq(row, col) + oDer(row, col);
+
+    return *oRet;
+
+}
+
+/** 
+ * @brief Operador de substracción
+ * @param oIzq [in] - Operando derecho 
+ * @param oDer [in] - Operando derecho
+ * @returns Resultado de la resta
+*/
+GreyImage& operator-(const GreyImage& oIzq, const GreyImage& oDer)
+{
+
+    /// @brief Check dimensions
+    if( oIzq.getHeight() != oDer.getHeight() ||
+        oIzq.getWidth() != oDer.getWidth() )
+        throw new InvalidDimensionsException();
+
+    GreyImage* oRet = new GreyImage(oIzq.getHeight(), oIzq.getWidth());
+
+    for(int row = 0; row < oIzq.getHeight(); ++row )
+        for(int col = 0; col < oIzq.getWidth(); ++col )
+            (*oRet)(row, col) = oIzq(row, col) - oDer(row, col);
+
+    return *oRet;
+
+}
