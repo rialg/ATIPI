@@ -74,20 +74,7 @@ int main(int argc, char* argv[])
         /// Descomprimir archivo
         cout << "Descomprimiendo "<< argv[2] << endl;
 
-        ifstream oImageStream(argv[2], ios::binary);
-        string line;
-
-        /// Validar el formato del archivo
-        getline(oImageStream, line);
-        oImageStream.close();
-        if( line.find( "P5" ) != string::npos )
-        {
-
-            decompress_from_file(argv[2]);
-
-        } else {
-            /// TODO
-        }
+        decompress_from_file(argv[2]);
 
     }
     cout << "Operación terminada " << endl;

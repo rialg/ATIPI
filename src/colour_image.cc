@@ -20,6 +20,20 @@ oGreen{new GreyImage(height, width)},
 oBlue{new GreyImage(height, width)}
 {};
 
+/**
+ * brief Constructor
+ * @param oRed [in] - Tono de rojo
+ * @param oGreen [in] - Tono de verde
+ * @param oBlue [in] - Tono de azul
+*/
+ColourImage::ColourImage(const GreyImage& oRed,
+            const GreyImage& oGreen,
+            const GreyImage& oBlue):
+oRed{new GreyImage(oRed)},
+oGreen{new GreyImage(oGreen)},
+oBlue{new GreyImage(oBlue)}
+{};
+
 /// @brief Copy Constructor
 ColourImage::ColourImage(const ColourImage& oImg):
 oRed{new GreyImage(oImg.getRedImage())},

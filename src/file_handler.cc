@@ -223,6 +223,7 @@ const compressData& read_compressed(const char* filePath)
 void decompress_from_file(const char* filePath)
 {
 
+    string filename{fs::path(filePath).stem().string()};
     string code("");
 
     /// Read file
@@ -232,7 +233,8 @@ void decompress_from_file(const char* filePath)
     string line;
     getline(oCompressedImage, line);
 
-    if( line.compare("P5") != 0 && line.compare("P6") != 0 ) /// Check format
+    string sType = line; /// < Tipo de imagen
+    if( sType.compare("P5") != 0 && sType.compare("P6") != 0 ) /// Check format
         throw InvalidImageFormatException();
 
     line.clear();
@@ -247,13 +249,13 @@ void decompress_from_file(const char* filePath)
     /// Obtener los contextos locales
     ContextTable oTable{getLocalContext(N, width, height)};
 
-    /// Empezar el proceso de descompresión
+    /// Empezar el proceso de descompresión del rojo
     string buffer = "";
     state oState(true, true, 0, 0, 0, 0, 0, 0);
 
     GreyImage   oErrorTemp{height, width},      /// < Error de predicción
                 oPred{height, width},           /// < Predicción MED
-                oDecompressed{height, width};   /// < Imagen descomprimida
+                oDecompressedRed{height, width};   /// < Imagen descomprimida
 
     char c = oCompressedImage.get();
     while( !oCompressedImage.eof() )
@@ -262,13 +264,69 @@ void decompress_from_file(const char* filePath)
         for( int i = 7; i >= 0; --i )
             code += string{ (c & ( 1 << i )) ? "1" : "0" };
 
-        stateless_decompress( code, oTable, height, width, N, oErrorTemp, oPred, oState, buffer, oDecompressed);
+        stateless_decompress( code, oTable, height, width, N, oErrorTemp, oPred, oState, buffer, oDecompressedRed);
         code.clear();
 
         oCompressedImage.get(c);
     }
-    string filename{fs::path(filePath).stem().string()};
-    ///@brief escribir imagen
-    oDecompressed.save(strcat( const_cast<char*>(filename.c_str()), ".pgm") );
+
+    ///@brief escribir imagen si es de tono de gris
+    if( sType.compare("P5") == 0 )
+    {
+
+        oDecompressedRed.save(strcat( const_cast<char*>(filename.c_str()), ".pgm") );
+        oCompressedImage.close();
+        return;
+
+    }
+
+    /// Empezar el proceso de descompresión del verde
+    buffer.clear();
+    buffer = "";
+    oState = state(true, true, 0, 0, 0, 0, 0, 0);
+
+    oErrorTemp = GreyImage{height, width},      /// < Error de predicción
+    oPred = GreyImage{height, width};           /// < Predicción MED
+    GreyImage oDecompressedGreen{height, width};/// < Imagen descomprimida
+
+    c = oCompressedImage.get();
+    while( !oCompressedImage.eof() )
+    {
+
+        for( int i = 7; i >= 0; --i )
+            code += string{ (c & ( 1 << i )) ? "1" : "0" };
+
+        stateless_decompress( code, oTable, height, width, N, oErrorTemp, oPred, oState, buffer, oDecompressedGreen);
+        code.clear();
+
+        oCompressedImage.get(c);
+    }
+
+    /// Empezar el proceso de descompresión del azul
+    buffer.clear();
+    buffer = "";
+    oState = state(true, true, 0, 0, 0, 0, 0, 0);
+
+    oErrorTemp = GreyImage{height, width},      /// < Error de predicción
+    oPred = GreyImage{height, width};           /// < Predicción MED
+    GreyImage oDecompressedBlue{height, width}; /// < Imagen descomprimida
+
+    c = oCompressedImage.get();
+    while( !oCompressedImage.eof() )
+    {
+
+        for( int i = 7; i >= 0; --i )
+            code += string{ (c & ( 1 << i )) ? "1" : "0" };
+
+        stateless_decompress( code, oTable, height, width, N, oErrorTemp, oPred, oState, buffer, oDecompressedBlue);
+        code.clear();
+
+        oCompressedImage.get(c);
+    }
+
+    ColourImage oDecompressed(oDecompressedRed, oDecompressedGreen, oDecompressedBlue);
+    oDecompressed.save( strcat( const_cast<char*>(filename.c_str()), ".ppm") );
+    oCompressedImage.close();
+    return;
 
 }

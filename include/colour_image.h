@@ -22,6 +22,9 @@ class ColourImage
     public:
         ColourImage();                                /// < Constructor por defecto
         ColourImage(int height, int width);           /// < Constructor
+        ColourImage(const GreyImage& oRed,
+                    const GreyImage& oGreen,
+                    const GreyImage& oBlue);           /// < Constructor
         ColourImage(const ColourImage& oImg);           /// < Copy Constructor
         ColourImage& operator=(const ColourImage& oImg);/// < Copy Assigment
         ColourImage(const char* imageFile);           /// < Constructor
