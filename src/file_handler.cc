@@ -258,7 +258,7 @@ void decompress_from_file(const char* filePath)
                 oDecompressedRed{height, width};   /// < Imagen descomprimida
 
     char c = oCompressedImage.get();
-    while( !oCompressedImage.eof() )
+    while( !oCompressedImage.eof() && get<2>(oState) < height && get<3>(oState) < width )
     {
 
         for( int i = 7; i >= 0; --i )
@@ -281,16 +281,13 @@ void decompress_from_file(const char* filePath)
     }
 
     /// Empezar el proceso de descompresión del verde
-    buffer.clear();
-    buffer = "";
     oState = state(true, true, 0, 0, 0, 0, 0, 0);
 
     oErrorTemp = GreyImage{height, width},      /// < Error de predicción
     oPred = GreyImage{height, width};           /// < Predicción MED
     GreyImage oDecompressedGreen{height, width};/// < Imagen descomprimida
 
-    c = oCompressedImage.get();
-    while( !oCompressedImage.eof() )
+    while( !oCompressedImage.eof() && get<2>(oState) < height && get<3>(oState) < width )
     {
 
         for( int i = 7; i >= 0; --i )
@@ -303,16 +300,13 @@ void decompress_from_file(const char* filePath)
     }
 
     /// Empezar el proceso de descompresión del azul
-    buffer.clear();
-    buffer = "";
     oState = state(true, true, 0, 0, 0, 0, 0, 0);
 
     oErrorTemp = GreyImage{height, width},      /// < Error de predicción
     oPred = GreyImage{height, width};           /// < Predicción MED
     GreyImage oDecompressedBlue{height, width}; /// < Imagen descomprimida
 
-    c = oCompressedImage.get();
-    while( !oCompressedImage.eof() )
+    while( !oCompressedImage.eof() && get<2>(oState) < height && get<3>(oState) < width )
     {
 
         for( int i = 7; i >= 0; --i )
@@ -324,9 +318,11 @@ void decompress_from_file(const char* filePath)
         oCompressedImage.get(c);
     }
 
+    /// Descomprimir imagen a color
     ColourImage oDecompressed(oDecompressedRed, oDecompressedGreen, oDecompressedBlue);
     oDecompressed.save( strcat( const_cast<char*>(filename.c_str()), ".ppm") );
     oCompressedImage.close();
+
     return;
 
 }
