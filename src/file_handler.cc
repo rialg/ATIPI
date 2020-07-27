@@ -9,8 +9,9 @@
  * @param height [in] int - image height
  * @param N [in] int - context size
  * @param oRGB [in] Colour - color a comprimir (aplica solamente a las imagenes a color)
+ * @param transform [in] Se transforman los planos de color
 */
-void compress(const GreyImage& oImage, const string& filename, const string& type, int width, int height,  size_t N, Colour oRGB)
+void compress(const GreyImage& oImage, const string& filename, const string& type, int width, int height,  size_t N, Colour oRGB, bool transform)
 {
 
     /// 0. Abrir archivo a escribir
@@ -23,6 +24,10 @@ void compress(const GreyImage& oImage, const string& filename, const string& typ
         pgmFile << type << endl;
         pgmFile << width << " " << height << endl;
         pgmFile << N << endl;
+        if( type.find( "P6" ) != string::npos )
+        {
+            pgmFile << (transform ? "B" : "A") << endl; /// Si se convirtio el plano de color la opción es B.
+        }
 
     }
     else
@@ -239,12 +244,25 @@ void decompress_from_file(const char* filePath)
 
     line.clear();
     getline(oCompressedImage, line);
-    int width = stoi(line.substr(0, line.find(" "))); // => To uncomment latter
-    int height = stoi(line.substr(line.find(" "), line.length() )); // => To uncomment latter
+    int width = stoi(line.substr(0, line.find(" ")));
+    int height = stoi(line.substr(line.find(" "), line.length() ));
 
     line.clear();
     getline(oCompressedImage, line);
     int N = stoi(line.substr(0, line.find(" ")));
+
+    /// Para imagenes a color, verificar si aplica la transformación
+    /// de los planos de color
+    bool transform = false;
+    if(sType.compare("P6") == 0)
+    {
+
+        line.clear();
+        getline(oCompressedImage, line);
+        if( line.compare("B") == 0 )
+            transform = true; /// Se debe revertir el cambio aplicado antes de comprimir
+
+    }
 
     /// Obtener los contextos locales
     ContextTable oTable{getLocalContext(N, width, height)};
@@ -320,6 +338,8 @@ void decompress_from_file(const char* filePath)
 
     /// Descomprimir imagen a color
     ColourImage oDecompressed(oDecompressedRed, oDecompressedGreen, oDecompressedBlue);
+    if(transform)
+        oDecompressed.undoTransform();
     oDecompressed.save( strcat( const_cast<char*>(filename.c_str()), ".ppm") );
     oCompressedImage.close();
 

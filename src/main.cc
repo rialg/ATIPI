@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     if(argc < 3)
     {
 
-        cout << "USAGE: Compressor <image-path> <N> | -d <compressed-image-path>" << endl;
+        cout << "USAGE: Compressor <image-path> <N> [A|B]| -d <compressed-image-path>" << endl;
         exit(ERROR_USAGE);
 
     }
@@ -58,14 +58,21 @@ int main(int argc, char* argv[])
         {
 
             GreyImage oImg( argv[1] );
-            compress(oImg, filename.c_str(), "P5", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), RED);
+            compress(oImg, filename.c_str(), "P5", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), RED, false);
 
         } else {
 
             ColourImage oImg( argv[1] );
-            compress(oImg.getRedImage(), filename.c_str(), "P6", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), RED);
-            compress(oImg.getGreenImage(), filename.c_str(), "P6", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), GREEN);
-            compress(oImg.getBlueImage(), filename.c_str(), "P6", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), BLUE);
+
+            bool transform = true;
+            if( argc < 4 || strncmp( argv[3], "A", 1) == 0 )
+                transform = false;
+            else
+                oImg.transform();
+
+            compress(oImg.getRedImage(), filename.c_str(), "P6", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), RED, transform);
+            compress(oImg.getGreenImage(), filename.c_str(), "P6", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), GREEN, transform);
+            compress(oImg.getBlueImage(), filename.c_str(), "P6", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), BLUE, transform);
 
         }
 
@@ -73,7 +80,6 @@ int main(int argc, char* argv[])
 
         /// Descomprimir archivo
         cout << "Descomprimiendo "<< argv[2] << endl;
-
         decompress_from_file(argv[2]);
 
     }

@@ -54,6 +54,10 @@ class ColourImage
         const int getHeight() const { return oRed->getHeight(); };
         ///@brief Accessor
         const tuple<int, int> getShape() const { return tuple<int, int>(oRed->getWidth(), oRed->getHeight()); };
+        /// @brief Transformation of colour planes
+        void transform();
+        /// @brief Undo transformation of colour planes
+        void undoTransform();
 
     private:
         GreyImage* oRed = nullptr; /// < Tono de rojo

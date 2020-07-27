@@ -225,6 +225,33 @@ ColourImage& ColourImage::operator-=(const ColourImage& oDer)
 
 }
 
+/// @brief Transformation of colour planes
+void ColourImage::transform()
+{
+
+    /// Modify only red and blue values
+    for( int row = 0; row < this->getHeight(); ++row )
+        for( int col = 0; col < this->getWidth(); ++col )
+        {
+            (*oRed)(row, col) = ( (*oRed)(row, col) - (*oGreen)(row, col) ) % 256;
+            (*oBlue)(row, col) = ( (*oBlue)(row, col) - (*oGreen)(row, col) ) % 256;
+        }
+
+}
+
+/// @brief Undo transformation of colour planes
+void ColourImage::undoTransform()
+{
+        /// Modify only red and blue values
+    for( int row = 0; row < this->getHeight(); ++row )
+        for( int col = 0; col < this->getWidth(); ++col )
+        {
+            (*oRed)(row, col) = ( (*oRed)(row, col) + (*oGreen)(row, col) ) % 256;
+            (*oBlue)(row, col) = ( (*oBlue)(row, col) + (*oGreen)(row, col) ) % 256;
+        }
+
+}
+
 /** 
  * @brief Operador de adición
  * @param oIzq [in] - Operando derecho 

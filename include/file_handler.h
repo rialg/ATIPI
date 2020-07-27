@@ -53,8 +53,9 @@ const compressData& read_compressed(const char* filePath);
  * @param height [in] int - image height
  * @param N [in] int - context size
  * @param oRGB [in] Colour - color a comprimir (aplica solamente a las imagenes a color)
+ * @param transform [in] Se transforman los planos de color
 */
-void compress(const GreyImage& oImage, const string& filename, const string& type, int width, int height,  size_t N, Colour oRGB);
+void compress(const GreyImage& oImage, const string& filename, const string& type, int width, int height,  size_t N, Colour oRGB, bool transform);
 
 /**
  * @brief   Leer el stream de bytes del archivo comprimido
