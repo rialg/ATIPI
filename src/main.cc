@@ -4,7 +4,7 @@
 
 #include <string>
 #include <iostream>
-#include <filesystem>
+#include <experimental/filesystem>
 #include "error_calculator.h"
 #include "context_sign_matrix.h"
 #include "decompressor.h"
@@ -12,7 +12,7 @@
 
 /// Usar namespace de la biblioteca estándar
 using namespace std;
-namespace fs = std::filesystem;
+namespace fs = std::experimental::filesystem;
 
 /// Código de estado
 const int ERROR_USAGE = -1;
