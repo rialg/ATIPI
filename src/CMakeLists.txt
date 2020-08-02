@@ -18,6 +18,7 @@ target_link_libraries(MedPredictor PUBLIC LocalContext)
 target_link_libraries(ErrorCalculator PUBLIC GreyImage)
 target_link_libraries(ContextSignMatrix PUBLIC GreyImage)
 target_link_libraries(FileHandler PUBLIC GreyImage)
+target_link_libraries(FileHandler PUBLIC Decompressor)
 
 target_link_libraries(GolombEncoder PUBLIC GreyImage)
 target_link_libraries(GolombEncoder PUBLIC LocalContext)
