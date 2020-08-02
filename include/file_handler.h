@@ -10,7 +10,7 @@
 #include <iostream>
 #include <bitset>
 #include <tuple>
-#include <experimental/filesystem>
+#include <filesystem>
 #include "grey_image.h"
 #include "colour_image.h"
 #include "med_predictor.h"
@@ -18,7 +18,7 @@
 #include "decompressor.h"
 
 using namespace std;
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 /// @brief Alias de tipo
 /// tupla con: código, alto, ancho y tamaño del contexto (N)
