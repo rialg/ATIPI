@@ -26,12 +26,12 @@ Proyecto de evaluación: Compresión/Decompresión de imágenes en colores
 ## Alternativa: Imagen de Docker
 1. Instalar [Docker](https://docs.docker.com/get-docker/)
 2. Ejecutar el script ```scripts/ubuntu_compressor.bash```. Por ejemplo:
-    2.1 ```$ bash scripts/ubuntu_compressor.bash test/Imagenes-LOCO-PGM+PPM/barbara.pgm 5```
-    2.2 ```$ bash scripts/ubuntu_compressor.bash test/Imagenes-LOCO-PGM+PPM/kodim07.ppm 5 A```
-    2.3 ```$ bash scripts/ubuntu_compressor.bash test/Imagenes-LOCO-PGM+PPM/kodim24.ppm 5 B```
-    2.4 ```$ bash scripts/ubuntu_compressor.bash -d barbara.loco```
-    2.5 ```$ bash scripts/ubuntu_compressor.bash -d kodim07.loco```
-    2.6 ```$ bash scripts/ubuntu_compressor.bash -d kodim24.loco```
+* ```$ bash scripts/ubuntu_compressor.bash test/Imagenes-LOCO-PGM+PPM/barbara.pgm 5```
+* ```$ bash scripts/ubuntu_compressor.bash test/Imagenes-LOCO-PGM+PPM/kodim07.ppm 5 A```
+* ```$ bash scripts/ubuntu_compressor.bash test/Imagenes-LOCO-PGM+PPM/kodim24.ppm 5 B```
+* ```$ bash scripts/ubuntu_compressor.bash -d barbara.loco```
+* ```$ bash scripts/ubuntu_compressor.bash -d kodim07.loco```
+* ```$ bash scripts/ubuntu_compressor.bash -d kodim24.loco```
 
 ## Documentación
 [archivos de Compressor](./docs/index.html)
