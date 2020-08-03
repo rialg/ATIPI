@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     if(argc < 3)
     {
 
-        cout << "USAGE: Compressor <image-path> <N> | -d <compressed-image-path>" << endl;
+        cout << "USAGE: Compressor <image-path> <N> [A|B]| -d <compressed-image-path>" << endl;
         exit(ERROR_USAGE);
 
     }
@@ -46,10 +46,35 @@ int main(int argc, char* argv[])
 
         /// Comprimir archivo
         cout << "Comprimiendo "<< argv[1] << endl;
-        GreyImage oImg( argv[1] );
 
         string filename{fs::path(argv[1]).stem().string()};
-        compress(oImg, filename.c_str(), "P5", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]));
+        ifstream oImageStream(argv[1], ios::binary);
+        string line;
+
+        /// Validar el formato del archivo
+        getline(oImageStream, line);
+        oImageStream.close();
+        if( line.find( "P5" ) != string::npos )
+        {
+
+            GreyImage oImg( argv[1] );
+            compress(oImg, filename.c_str(), "P5", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), RED, false);
+
+        } else {
+
+            ColourImage oImg( argv[1] );
+
+            bool transform = true;
+            if( argc < 4 || strncmp( argv[3], "A", 1) == 0 )
+                transform = false;
+            else
+                oImg.transform();
+
+            compress(oImg.getRedImage(), filename.c_str(), "P6", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), RED, transform);
+            compress(oImg.getGreenImage(), filename.c_str(), "P6", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), GREEN, transform);
+            compress(oImg.getBlueImage(), filename.c_str(), "P6", oImg.getWidth(), oImg.getHeight(), atoi(argv[2]), BLUE, transform);
+
+        }
 
     } else {
 

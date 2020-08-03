@@ -72,6 +72,8 @@ GreyImage::GreyImage(const char* imageFile)
     
     /// Tomar dimensiones
     getline(oImageStream, line);
+    while( line[0] == '#' )             /// Descartar comentarios
+        getline(oImageStream, line);    /// Descartar comentarios
     width = stoi(line.substr(0, line.find(" ")));
     height = stoi(line.substr(line.find(" "), line.length() ));
     
@@ -79,6 +81,8 @@ GreyImage::GreyImage(const char* imageFile)
     imageMat = new int16_t[width*height];
     
     getline(oImageStream, line); /// < Descartar max_val
+    while( line[0] == '#' )             /// Descartar comentarios
+        getline(oImageStream, line);    /// Descartar comentarios
 
     /// < Leer datos byte a byte
     char c = oImageStream.get();

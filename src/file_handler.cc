@@ -8,16 +8,30 @@
  * @param width [in] int - image width
  * @param height [in] int - image height
  * @param N [in] int - context size
+ * @param oRGB [in] Colour - color a comprimir (aplica solamente a las imagenes a color)
+ * @param transform [in] Se transforman los planos de color
 */
-void compress(const GreyImage& oImage, const string& filename, const string& type, int width, int height,  size_t N)
+void compress(const GreyImage& oImage, const string& filename, const string& type, int width, int height,  size_t N, Colour oRGB, bool transform)
 {
 
     /// 0. Abrir archivo a escribir
     ofstream pgmFile;
-    pgmFile.open(filename + ".loco");
-    pgmFile << type << endl;
-    pgmFile << width << " " << height << endl;
-    pgmFile << N << endl;
+
+    if( type.find( "P5" ) != string::npos || oRGB == RED )
+    {
+
+        pgmFile.open(filename + ".loco");
+        pgmFile << type << endl;
+        pgmFile << width << " " << height << endl;
+        pgmFile << N << endl;
+        if( type.find( "P6" ) != string::npos )
+        {
+            pgmFile << (transform ? "B" : "A") << endl; /// Si se convirtio el plano de color la opción es B.
+        }
+
+    }
+    else
+        pgmFile.open(filename + ".loco", std::ios_base::app);
 
     /// 1. Apply MED
     GreyImage oPrediction = fixed_prediction(oImage);
@@ -214,6 +228,7 @@ const compressData& read_compressed(const char* filePath)
 void decompress_from_file(const char* filePath)
 {
 
+    string filename{fs::path(filePath).stem().string()};
     string code("");
 
     /// Read file
@@ -223,43 +238,111 @@ void decompress_from_file(const char* filePath)
     string line;
     getline(oCompressedImage, line);
 
-    if( line.compare("P5") != 0 && line.compare("P6") != 0 ) /// Check format
+    string sType = line; /// < Tipo de imagen
+    if( sType.compare("P5") != 0 && sType.compare("P6") != 0 ) /// Check format
         throw InvalidImageFormatException();
 
     line.clear();
     getline(oCompressedImage, line);
-    int width = stoi(line.substr(0, line.find(" "))); // => To uncomment latter
-    int height = stoi(line.substr(line.find(" "), line.length() )); // => To uncomment latter
+    int width = stoi(line.substr(0, line.find(" ")));
+    int height = stoi(line.substr(line.find(" "), line.length() ));
 
     line.clear();
     getline(oCompressedImage, line);
     int N = stoi(line.substr(0, line.find(" ")));
 
+    /// Para imagenes a color, verificar si aplica la transformación
+    /// de los planos de color
+    bool transform = false;
+    if(sType.compare("P6") == 0)
+    {
+
+        line.clear();
+        getline(oCompressedImage, line);
+        if( line.compare("B") == 0 )
+            transform = true; /// Se debe revertir el cambio aplicado antes de comprimir
+
+    }
+
     /// Obtener los contextos locales
     ContextTable oTable{getLocalContext(N, width, height)};
 
-    /// Empezar el proceso de descompresión
+    /// Empezar el proceso de descompresión del rojo
     string buffer = "";
     state oState(true, true, 0, 0, 0, 0, 0, 0);
 
     GreyImage   oErrorTemp{height, width},      /// < Error de predicción
                 oPred{height, width},           /// < Predicción MED
-                oDecompressed{height, width};   /// < Imagen descomprimida
+                oDecompressedRed{height, width};   /// < Imagen descomprimida
 
     char c = oCompressedImage.get();
-    while( !oCompressedImage.eof() )
+    while( !oCompressedImage.eof() && get<2>(oState) < height && get<3>(oState) < width )
     {
 
         for( int i = 7; i >= 0; --i )
             code += string{ (c & ( 1 << i )) ? "1" : "0" };
 
-        stateless_decompress( code, oTable, height, width, N, oErrorTemp, oPred, oState, buffer, oDecompressed);
+        stateless_decompress( code, oTable, height, width, N, oErrorTemp, oPred, oState, buffer, oDecompressedRed);
         code.clear();
 
         oCompressedImage.get(c);
     }
-    string filename{fs::path(filePath).stem().string()};
-    ///@brief escribir imagen
-    oDecompressed.save(strcat( const_cast<char*>(filename.c_str()), ".pgm") );
+
+    ///@brief escribir imagen si es de tono de gris
+    if( sType.compare("P5") == 0 )
+    {
+
+        oDecompressedRed.save(strcat( const_cast<char*>(filename.c_str()), ".pgm") );
+        oCompressedImage.close();
+        return;
+
+    }
+
+    /// Empezar el proceso de descompresión del verde
+    oState = state(true, true, 0, 0, 0, 0, 0, 0);
+
+    oErrorTemp = GreyImage{height, width},      /// < Error de predicción
+    oPred = GreyImage{height, width};           /// < Predicción MED
+    GreyImage oDecompressedGreen{height, width};/// < Imagen descomprimida
+
+    while( !oCompressedImage.eof() && get<2>(oState) < height && get<3>(oState) < width )
+    {
+
+        for( int i = 7; i >= 0; --i )
+            code += string{ (c & ( 1 << i )) ? "1" : "0" };
+
+        stateless_decompress( code, oTable, height, width, N, oErrorTemp, oPred, oState, buffer, oDecompressedGreen);
+        code.clear();
+
+        oCompressedImage.get(c);
+    }
+
+    /// Empezar el proceso de descompresión del azul
+    oState = state(true, true, 0, 0, 0, 0, 0, 0);
+
+    oErrorTemp = GreyImage{height, width},      /// < Error de predicción
+    oPred = GreyImage{height, width};           /// < Predicción MED
+    GreyImage oDecompressedBlue{height, width}; /// < Imagen descomprimida
+
+    while( !oCompressedImage.eof() && get<2>(oState) < height && get<3>(oState) < width )
+    {
+
+        for( int i = 7; i >= 0; --i )
+            code += string{ (c & ( 1 << i )) ? "1" : "0" };
+
+        stateless_decompress( code, oTable, height, width, N, oErrorTemp, oPred, oState, buffer, oDecompressedBlue);
+        code.clear();
+
+        oCompressedImage.get(c);
+    }
+
+    /// Descomprimir imagen a color
+    ColourImage oDecompressed(oDecompressedRed, oDecompressedGreen, oDecompressedBlue);
+    if(transform)
+        oDecompressed.undoTransform();
+    oDecompressed.save( strcat( const_cast<char*>(filename.c_str()), ".ppm") );
+    oCompressedImage.close();
+
+    return;
 
 }

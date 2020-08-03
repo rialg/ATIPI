@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['contextsign_52',['contextSign',['../structcontext_sign.html',1,'']]],
-  ['contextsignmatrix_53',['ContextSignMatrix',['../class_context_sign_matrix.html',1,'']]],
-  ['contexttable_54',['ContextTable',['../class_context_table.html',1,'']]]
+  ['colourimage_64',['ColourImage',['../class_colour_image.html',1,'']]],
+  ['contextsign_65',['contextSign',['../structcontext_sign.html',1,'']]],
+  ['contextsignmatrix_66',['ContextSignMatrix',['../class_context_sign_matrix.html',1,'']]],
+  ['contexttable_67',['ContextTable',['../class_context_table.html',1,'']]]
 ];

@@ -81,30 +81,32 @@ $(function() {
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;tuple&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;filesystem&gt;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="grey__image_8h.html">grey_image.h</a>&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="med__predictor_8h.html">med_predictor.h</a>&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="golomb__encoder_8h.html">golomb_encoder.h</a>&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="decompressor_8h.html">decompressor.h</a>&quot;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespacestd.html">std</a>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span>fs = std::filesystem;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">using</span> compressData = tuple&lt;string,int, int, int&gt;;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> copy_to_file(<span class="keywordtype">string</span> filename, <span class="keywordtype">string</span> type, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, <span class="keywordtype">int</span> n, vector&lt;bool&gt; bits);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">const</span> compressData&amp; read_compressed(<span class="keyword">const</span> <span class="keywordtype">char</span>* filePath);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keywordtype">void</span> compress(<span class="keyword">const</span> <a class="code" href="class_grey_image.html">GreyImage</a>&amp; oImage, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; filename, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; type, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height,  <span class="keywordtype">size_t</span> N);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">void</span> decompress_from_file(<span class="keyword">const</span> <span class="keywordtype">char</span>* filePath);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#endif /// &lt; ATIPI_INCLUDE_FILE_HANDLER_H_</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="colour__image_8h.html">colour_image.h</a>&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="med__predictor_8h.html">med_predictor.h</a>&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="golomb__encoder_8h.html">golomb_encoder.h</a>&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="decompressor_8h.html">decompressor.h</a>&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespacestd.html">std</a>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">namespace </span>fs = std::filesystem;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">using</span> compressData = tuple&lt;string,int, int, int&gt;;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">void</span> copy_to_file(<span class="keywordtype">string</span> filename, <span class="keywordtype">string</span> type, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, <span class="keywordtype">int</span> n, vector&lt;bool&gt; bits);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">const</span> compressData&amp; read_compressed(<span class="keyword">const</span> <span class="keywordtype">char</span>* filePath);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">void</span> compress(<span class="keyword">const</span> <a class="code" href="class_grey_image.html">GreyImage</a>&amp; oImage, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; filename, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; type, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height,  <span class="keywordtype">size_t</span> N, <a class="code" href="colour__image_8h.html#a7dae1270b9f323383fd77c3160a9927d">Colour</a> oRGB, <span class="keywordtype">bool</span> transform);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">void</span> decompress_from_file(<span class="keyword">const</span> <span class="keywordtype">char</span>* filePath);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif /// &lt; ATIPI_INCLUDE_FILE_HANDLER_H_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="amed__predictor_8h_html"><div class="ttname"><a href="med__predictor_8h.html">med_predictor.h</a></div></div>
 <div class="ttc" id="agrey__image_8h_html"><div class="ttname"><a href="grey__image_8h.html">grey_image.h</a></div></div>
 <div class="ttc" id="adecompressor_8h_html"><div class="ttname"><a href="decompressor_8h.html">decompressor.h</a></div></div>
 <div class="ttc" id="aclass_grey_image_html"><div class="ttname"><a href="class_grey_image.html">GreyImage</a></div><div class="ttdef"><b>Definition:</b> grey_image.h:23</div></div>
+<div class="ttc" id="acolour__image_8h_html_a7dae1270b9f323383fd77c3160a9927d"><div class="ttname"><a href="colour__image_8h.html#a7dae1270b9f323383fd77c3160a9927d">Colour</a></div><div class="ttdeci">Colour</div><div class="ttdoc">Enumeracion de colores.</div><div class="ttdef"><b>Definition:</b> colour_image.h:13</div></div>
+<div class="ttc" id="acolour__image_8h_html"><div class="ttname"><a href="colour__image_8h.html">colour_image.h</a></div></div>
 <div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdoc">funcion de hash especializada</div><div class="ttdef"><b>Definition:</b> local_context.h:25</div></div>
 <div class="ttc" id="agolomb__encoder_8h_html"><div class="ttname"><a href="golomb__encoder_8h.html">golomb_encoder.h</a></div></div>
 <!-- start footer part -->
