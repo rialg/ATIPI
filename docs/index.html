@@ -67,6 +67,12 @@ $(function() {
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a>Proyecto de evaluación: Compresión/Decompresión de imágenes en colores</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
+Preferencias del sistema para compilar el proyecto</h1>
+<ul>
+<li>MacOS (Catalina 10.15.6): Compilar con <code>clang++</code> version 11</li>
+<li>Ubuntu 18.04 y 20.04: Compilar con <code>gcc-9/g++-9</code> version 9 (o superior)</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md2"></a>
 Como crear ejecutable</h1>
 <ol type="1">
 <li><code>$ mkdir build</code></li>
@@ -74,27 +80,41 @@ Como crear ejecutable</h1>
 <li><code>$ cmake ..</code></li>
 <li><code>$ make</code></li>
 </ol>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<h1><a class="anchor" id="autotoc_md3"></a>
 Ejemplo de compresión de imágenes de tono gris</h1>
 <ol type="1">
 <li><code>$ ./Compressor test/Imagenes-LOCO-PGM+PPM/barbara.pgm 5</code></li>
 </ol>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<h1><a class="anchor" id="autotoc_md4"></a>
 Ejemplos de compresión de imágenes a color</h1>
 <ol type="1">
 <li><code>$ ./Compressor test/Imagenes-LOCO-PGM+PPM/kodim07.ppm 5 A</code></li>
 <li><code>$ ./Compressor test/Imagenes-LOCO-PGM+PPM/kodim24.ppm 5 B</code></li>
 </ol>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md5"></a>
 Ejemplos de decompresión</h1>
 <ol type="1">
 <li><code>$ ./Compressor -d barbara.loco</code></li>
 <li><code>$ ./Compressor -d kodim07.loco</code></li>
 <li><code>$ ./Compressor -d kodim24.loco</code></li>
 </ol>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<h1><a class="anchor" id="autotoc_md6"></a>
+Alternativa: Imagen de Docker</h1>
+<ol type="1">
+<li>Instalar <a href="https://docs.docker.com/get-docker/">Docker</a></li>
+<li>Ejecutar el script <code>scripts/ubuntu_compressor.bash</code>. Por ejemplo:</li>
+</ol>
+<ul>
+<li><code>$ bash scripts/ubuntu_compressor.bash test/Imagenes-LOCO-PGM+PPM/barbara.pgm 5</code></li>
+<li><code>$ bash scripts/ubuntu_compressor.bash test/Imagenes-LOCO-PGM+PPM/kodim07.ppm 5 A</code></li>
+<li><code>$ bash scripts/ubuntu_compressor.bash test/Imagenes-LOCO-PGM+PPM/kodim24.ppm 5 B</code></li>
+<li><code>$ bash scripts/ubuntu_compressor.bash -d barbara.loco</code></li>
+<li><code>$ bash scripts/ubuntu_compressor.bash -d kodim07.loco</code></li>
+<li><code>$ bash scripts/ubuntu_compressor.bash -d kodim24.loco</code></li>
+</ul>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Documentación</h1>
-<p><a href="./docs/index.html">archivos de Compressor</a> </p>
+<p><a href="https://grial1.github.io/ATIPI/">Proyecto de compresión de imágenes</a> </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
