@@ -34,4 +34,4 @@ Proyecto de evaluación: Compresión/Decompresión de imágenes en colores
 * ```$ bash scripts/ubuntu_compressor.bash -d kodim24.loco```
 
 ## Documentación
-[Proyecto de compresión de imágenes](https://grial1.github.io/ATIPI/)
+[Proyecto de compresión de imágenes](https://rialg.github.io/ATIPI/)
